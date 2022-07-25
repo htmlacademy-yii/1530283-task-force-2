@@ -1,0 +1,9 @@
+<?php
+
+class TaskAction
+{
+    const CANCEL = 'cancel_task_action';
+    const RESPONSE = 'response_task_action';
+    const COMPLETE = 'complete_task_action';
+    const FAIL = 'fail_task_action';
+}
