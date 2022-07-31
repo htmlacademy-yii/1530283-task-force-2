@@ -28,7 +28,7 @@ function validateTaskActionMap(array $map): bool
     return is_array($map) && isset($map[TaskAction::CANCEL])
            && isset($map[TaskAction::FAIL])
            && isset($map[TaskAction::COMPLETE])
-           && isset($map[TaskAction::RESPONSE]);
+           && isset($map[TaskAction::RESPOND]);
 }
 
 assert(
@@ -47,7 +47,7 @@ assert(
 );
 
 assert(
-    $newTask->getContractorAction() === TaskAction::RESPONSE,
+    $newTask->getContractorAction() === TaskAction::RESPOND,
     'Исполнитель может отклинуться на новую задачу'
 );
 
@@ -57,7 +57,7 @@ assert(
 );
 
 assert(
-    $newTask->getNextStatus(TaskAction::RESPONSE) === TaskStatus::NEW,
+    $newTask->getNextStatus(TaskAction::RESPOND) === TaskStatus::NEW,
     'Новая задача при отклике не меняет статус'
 );
 
@@ -87,7 +87,7 @@ assert(
 );
 
 assert(
-    $cancelledTask->getNextStatus(TaskAction::RESPONSE) === null,
+    $cancelledTask->getNextStatus(TaskAction::RESPOND) === null,
     'На отмененную задачу нельзя сделать отклик'
 );
 
@@ -117,7 +117,7 @@ assert(
 );
 
 assert(
-    $inProgressTask->getNextStatus(TaskAction::RESPONSE) === null,
+    $inProgressTask->getNextStatus(TaskAction::RESPOND) === null,
     'На задачу в работе нельзя сделать отклик'
 );
 
@@ -148,7 +148,7 @@ assert(
 );
 
 assert(
-    $completedTask->getNextStatus(TaskAction::RESPONSE) === null,
+    $completedTask->getNextStatus(TaskAction::RESPOND) === null,
     'На завершенную задачу нельзя сделать отклик'
 );
 
@@ -178,7 +178,7 @@ assert(
 );
 
 assert(
-    $failedTask->getNextStatus(TaskAction::RESPONSE) === null,
+    $failedTask->getNextStatus(TaskAction::RESPOND) === null,
     'На проваленную задачу нельзя сделать отклик'
 );
 

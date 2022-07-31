@@ -23,7 +23,7 @@ class Task
     {
         return [
             TaskAction::CANCEL => 'Отменить',
-            TaskAction::RESPONSE => 'Откликнуться',
+            TaskAction::RESPOND => 'Откликнуться',
             TaskAction::COMPLETE => 'Завершить',
             TaskAction::FAIL => 'Отказаться',
         ];
@@ -56,7 +56,7 @@ class Task
     public function getContractorAction(): ?string
     {
         if ($this->status === TaskStatus::NEW) {
-            return TaskAction::RESPONSE;
+            return TaskAction::RESPOND;
         }
 
         if ($this->status === TaskStatus::IN_PROGRESS) {
@@ -75,7 +75,7 @@ class Task
                     : null;
             }
 
-            case TaskAction::RESPONSE:
+            case TaskAction::RESPOND:
             {
                 return $this->status === TaskStatus::NEW ? $this->status
                     : null;
