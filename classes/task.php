@@ -5,17 +5,17 @@ require_once 'classes/task-action.php';
 
 class Task
 {
-    private Customer $customer;
-    private Contractor|null $contractor;
+    private int $customer_id;
+    private ?int $contractor_id;
     private string $status;
 
     public function __construct(
-        Customer $customer,
-        Contractor $contractor = null,
+        int $customer_id,
+        int $contractor_id = null,
         string $status = TaskStatus::NEW
     ) {
-        $this->customer = $customer;
-        $this->contractor = $contractor;
+        $this->customer_id = $customer_id;
+        $this->contractor_id = $contractor_id;
         $this->status = $status;
     }
 
@@ -40,7 +40,7 @@ class Task
         ];
     }
 
-    public function getCustomerAction(): string|null
+    public function getCustomerAction(): ?string
     {
         if ($this->status === TaskStatus::NEW) {
             return TaskAction::CANCEL;
@@ -53,7 +53,7 @@ class Task
         return null;
     }
 
-    public function getContractorAction(): string|null
+    public function getContractorAction(): ?string
     {
         if ($this->status === TaskStatus::NEW) {
             return TaskAction::RESPONSE;
@@ -66,7 +66,7 @@ class Task
         return null;
     }
 
-    public function getNextStatus(string $action): string | null
+    public function getNextStatus(string $action): ?string
     {
         switch ($action) {
             case TaskAction::CANCEL:

@@ -2,22 +2,17 @@
 
 require_once 'init/common.php';
 
-require_once 'classes/customer.php';
-require_once 'classes/contractor.php';
 require_once 'classes/task.php';
 require_once 'classes/task-status.php';
 
 const CUSTOMER_ID = 1;
 const CONTRACTOR_ID = 2;
 
-$customer = new Customer(CUSTOMER_ID);
-$contractor = new Contractor(CONTRACTOR_ID);
-
-$newTask = new Task($customer);
-$cancelledTask = new Task($customer, null, TaskStatus::CANCELLED);
-$inProgressTask = new Task($customer, $contractor, TaskStatus::IN_PROGRESS);
-$completedTask = new Task($customer, $contractor, TaskStatus::COMPLETED);
-$failedTask = new Task($customer, $contractor, TaskStatus::FAILED);
+$newTask = new Task(CUSTOMER_ID);
+$cancelledTask = new Task(CUSTOMER_ID, null, TaskStatus::CANCELLED);
+$inProgressTask = new Task(CUSTOMER_ID, CONTRACTOR_ID, TaskStatus::IN_PROGRESS);
+$completedTask = new Task(CUSTOMER_ID, CONTRACTOR_ID, TaskStatus::COMPLETED);
+$failedTask = new Task(CUSTOMER_ID, CONTRACTOR_ID, TaskStatus::FAILED);
 
 function validateTaskStatusMap(array $map): bool
 {
