@@ -2,8 +2,8 @@
 
 require_once 'init/common.php';
 
-require_once 'classes/task.php';
-require_once 'classes/task-status.php';
+require_once 'classes/Task.php';
+require_once 'classes/TaskStatus.php';
 
 const CUSTOMER_ID = 1;
 const CONTRACTOR_ID = 2;

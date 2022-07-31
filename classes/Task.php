@@ -1,7 +1,7 @@
 <?php
 
-require_once 'classes/task-status.php';
-require_once 'classes/task-action.php';
+require_once 'classes/TaskStatus.php';
+require_once 'classes/TaskAction.php';
 
 class Task
 {
