@@ -40,32 +40,6 @@ class Task
         ];
     }
 
-    public function getCustomerAction(): ?string
-    {
-        if ($this->status === TaskStatus::NEW) {
-            return TaskAction::CANCEL;
-        }
-
-        if ($this->status === TaskStatus::IN_PROGRESS) {
-            return TaskAction::COMPLETE;
-        }
-
-        return null;
-    }
-
-    public function getContractorAction(): ?string
-    {
-        if ($this->status === TaskStatus::NEW) {
-            return TaskAction::RESPOND;
-        }
-
-        if ($this->status === TaskStatus::IN_PROGRESS) {
-            return TaskAction::FAIL;
-        }
-
-        return null;
-    }
-
     public function getNextStatus(string $action): ?string
     {
         switch ($action) {
@@ -98,5 +72,50 @@ class Task
                 return null;
             }
         }
+    }
+
+    public function getAction(int $userId): array
+    {
+        $isCustomer = $this->customer_id === $userId;
+
+        if ($isCustomer) {
+            return $this->getCustomerAction();
+        }
+
+        $isNewTask =
+            is_null($this->contractor_id) && $this->status === TaskStatus::NEW;
+        $isContractor = $this->contractor_id === $userId || $isNewTask;
+
+        if ($isContractor) {
+            return $this->getContractorAction();
+        }
+
+        return [];
+    }
+
+    protected function getCustomerAction(): array
+    {
+        if ($this->status === TaskStatus::NEW) {
+            return [TaskAction::CANCEL];
+        }
+
+        if ($this->status === TaskStatus::IN_PROGRESS) {
+            return [TaskAction::COMPLETE];
+        }
+
+        return [];
+    }
+
+    protected function getContractorAction(): array
+    {
+        if ($this->status === TaskStatus::NEW) {
+            return [TaskAction::RESPOND];
+        }
+
+        if ($this->status === TaskStatus::IN_PROGRESS) {
+            return [TaskAction::FAIL];
+        }
+
+        return [];
     }
 }

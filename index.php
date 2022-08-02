@@ -7,6 +7,7 @@ require_once 'classes/TaskStatus.php';
 
 const CUSTOMER_ID = 1;
 const CONTRACTOR_ID = 2;
+const USER_ID = 3;
 
 $newTask = new Task(CUSTOMER_ID);
 $cancelledTask = new Task(CUSTOMER_ID, null, TaskStatus::CANCELLED);
@@ -42,13 +43,18 @@ assert(
 );
 
 assert(
-    $newTask->getCustomerAction() === TaskAction::CANCEL,
+    $newTask->getAction(CUSTOMER_ID) === [TaskAction::CANCEL],
     'Заказчик может отменить новую задачу'
 );
 
 assert(
-    $newTask->getContractorAction() === TaskAction::RESPOND,
+    $newTask->getAction(CONTRACTOR_ID) === [TaskAction::RESPOND],
     'Исполнитель может отклинуться на новую задачу'
+);
+
+assert(
+    $newTask->getAction(USER_ID) === [TaskAction::RESPOND],
+    'Не заказчик может отклинуться на новую задачу'
 );
 
 assert(
@@ -72,13 +78,18 @@ assert(
 );
 
 assert(
-    $cancelledTask->getCustomerAction() === null,
+    $cancelledTask->getAction(CUSTOMER_ID) === [],
     'Заказчик ничего не может сделать с отмененной задачей'
 );
 
 assert(
-    $cancelledTask->getContractorAction() === null,
+    $cancelledTask->getAction(CONTRACTOR_ID) === [],
     'Исполнитель ничего не может сделать с отмененной задачей'
+);
+
+assert(
+    $cancelledTask->getAction(USER_ID) === [],
+    'Не заказчик и не исполнитель ничего не может сделать с отмененной задачей'
 );
 
 assert(
@@ -102,13 +113,18 @@ assert(
 );
 
 assert(
-    $inProgressTask->getCustomerAction() === TaskAction::COMPLETE,
+    $inProgressTask->getAction(CUSTOMER_ID) === [TaskAction::COMPLETE],
     'Заказчик может завершить задачу, находящуюся в работе'
 );
 
 assert(
-    $inProgressTask->getContractorAction() === TaskAction::FAIL,
+    $inProgressTask->getAction(CONTRACTOR_ID) === [TaskAction::FAIL],
     'Исполнитель может провалить задачу, находящуюся в работе'
+);
+
+assert(
+    $inProgressTask->getAction(USER_ID) === [],
+    'Не заказчик и не исполнитель ничего не может сделать с задачей, находящейся в работе'
 );
 
 assert(
@@ -133,13 +149,18 @@ assert(
 );
 
 assert(
-    $completedTask->getCustomerAction() === null,
+    $completedTask->getAction(CUSTOMER_ID) === [],
     'Заказчик ничего не может сделать с выполненной задачей'
 );
 
 assert(
-    $completedTask->getContractorAction() === null,
+    $completedTask->getAction(CONTRACTOR_ID) === [],
     'Исполнитель ничего не может сделать с выполненной задачей'
+);
+
+assert(
+    $completedTask->getAction(USER_ID) === [],
+    'Не заказчик и не исполнитель ничего не может сделать с выполненной задачей'
 );
 
 assert(
@@ -163,13 +184,18 @@ assert(
 );
 
 assert(
-    $failedTask->getCustomerAction() === null,
+    $failedTask->getAction(CUSTOMER_ID) === [],
     'Заказчик ничего не может сделать с проваленной задачей'
 );
 
 assert(
-    $failedTask->getContractorAction() === null,
+    $failedTask->getAction(CONTRACTOR_ID) === [],
     'Исполнитель ничего не может сделать с проваленной задачей'
+);
+
+assert(
+    $completedTask->getAction(USER_ID) === [],
+    'Не заказчик и не исполнитель ничего не может сделать с проваленной задачей'
 );
 
 assert(
