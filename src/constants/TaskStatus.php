@@ -1,5 +1,7 @@
 <?php
 
+namespace TaskForce\constants;
+
 class TaskStatus
 {
     const NEW = 'new_task_status';

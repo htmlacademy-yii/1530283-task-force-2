@@ -1,7 +1,9 @@
 <?php
 
-require_once 'classes/TaskStatus.php';
-require_once 'classes/TaskAction.php';
+namespace TaskForce\models;
+
+use TaskForce\constants\TaskAction;
+use TaskForce\constants\TaskStatus;
 
 class Task
 {

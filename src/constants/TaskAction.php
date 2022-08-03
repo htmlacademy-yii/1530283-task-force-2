@@ -1,5 +1,7 @@
 <?php
 
+namespace TaskForce\constants;
+
 class TaskAction
 {
     const CANCEL = 'cancel_task_action';

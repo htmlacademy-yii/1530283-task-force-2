@@ -1,0 +1,18 @@
+{
+    "name": "htmlacademy/task-force",
+    "description": "HTMLAcademy personal project",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eugene Skrobov",
+            "email": "skrobov.ev@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "TaskForce\\": "src/"
+        }
+    },
+    "require": {}
+}
