@@ -1,7 +1,7 @@
 # Личный проект «TaskForce»
 
 * Студент: [Евгений Скробов](https://up.htmlacademy.ru/yii/2/user/1530283).
-* Наставник: [Сергей Парфенов](https://htmlacademy.ru/profile/id926645).
+* Наставник: [Анатолий Пашин](https://htmlacademy.ru/profile/id1200767).
 
 ---
 
