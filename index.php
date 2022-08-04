@@ -1,9 +1,11 @@
 <?php
 
 require_once 'init/common.php';
+require_once 'vendor/autoload.php';
 
-require_once 'classes/Task.php';
-require_once 'classes/TaskStatus.php';
+use TaskForce\models\Task;
+use TaskForce\constants\TaskStatus;
+use TaskForce\constants\TaskAction;
 
 const CUSTOMER_ID = 1;
 const CONTRACTOR_ID = 2;
