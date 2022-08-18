@@ -45,18 +45,57 @@ assert(
 );
 
 assert(
-    $newTask->getAction(CUSTOMER_ID) === [TaskAction::CANCEL],
+    $newTask->getAction(CUSTOMER_ID)[0]->checkPermission(
+        CUSTOMER_ID,
+        $newTask->customer_id,
+        $newTask->contractor_id
+    ),
     'Заказчик может отменить новую задачу'
 );
 
 assert(
-    $newTask->getAction(CONTRACTOR_ID) === [TaskAction::RESPOND],
+    $newTask->getAction(CUSTOMER_ID)[0]->checkPermission(
+        CONTRACTOR_ID,
+        $newTask->customer_id,
+        $newTask->contractor_id
+    ) === false,
+    'Не заказчик не может отменить новую задачу'
+);
+
+assert(
+    $newTask->getAction(CUSTOMER_ID)[0]->checkPermission(
+        USER_ID,
+        $newTask->customer_id,
+        $newTask->contractor_id
+    ) === false,
+    'Не заказчик не может отменить новую задачу'
+);
+
+assert(
+    $newTask->getAction(CONTRACTOR_ID)[0]->checkPermission(
+        CONTRACTOR_ID,
+        $newTask->customer_id,
+        $newTask->contractor_id
+    ),
     'Исполнитель может отклинуться на новую задачу'
 );
 
 assert(
-    $newTask->getAction(USER_ID) === [TaskAction::RESPOND],
+    $newTask->getAction(USER_ID)[0]->checkPermission(
+        USER_ID,
+        $newTask->customer_id,
+        $newTask->contractor_id
+    ),
     'Не заказчик может отклинуться на новую задачу'
+);
+
+assert(
+    $newTask->getAction(USER_ID)[0]->checkPermission(
+        CUSTOMER_ID,
+        $newTask->customer_id,
+        $newTask->contractor_id
+    ) === false,
+    'Заказчик может отклинуться на новую задачу'
 );
 
 assert(
@@ -115,13 +154,57 @@ assert(
 );
 
 assert(
-    $inProgressTask->getAction(CUSTOMER_ID) === [TaskAction::COMPLETE],
+    $inProgressTask->getAction(CUSTOMER_ID)[0]->checkPermission(
+        CUSTOMER_ID,
+        $inProgressTask->customer_id,
+        $inProgressTask->contractor_id
+    ),
     'Заказчик может завершить задачу, находящуюся в работе'
 );
 
 assert(
-    $inProgressTask->getAction(CONTRACTOR_ID) === [TaskAction::FAIL],
+    $inProgressTask->getAction(CUSTOMER_ID)[0]->checkPermission(
+        CONTRACTOR_ID,
+        $inProgressTask->customer_id,
+        $inProgressTask->contractor_id
+    ) === false,
+    'Исполнитель не может завершить задачу, находящуюся в работе'
+);
+
+assert(
+    $inProgressTask->getAction(CUSTOMER_ID)[0]->checkPermission(
+        USER_ID,
+        $inProgressTask->customer_id,
+        $inProgressTask->contractor_id
+    ) === false,
+    'Не заказчик не может завершить задачу, находящуюся в работе'
+);
+
+assert(
+    $inProgressTask->getAction(CONTRACTOR_ID)[0]->checkPermission(
+        CONTRACTOR_ID,
+        $inProgressTask->customer_id,
+        $inProgressTask->contractor_id
+    ),
     'Исполнитель может провалить задачу, находящуюся в работе'
+);
+
+assert(
+    $inProgressTask->getAction(CONTRACTOR_ID)[0]->checkPermission(
+        CUSTOMER_ID,
+        $inProgressTask->customer_id,
+        $inProgressTask->contractor_id
+    ) === false,
+    'Заказчик не может провалить задачу, находящуюся в работе'
+);
+
+assert(
+    $inProgressTask->getAction(CONTRACTOR_ID)[0]->checkPermission(
+        USER_ID,
+        $inProgressTask->customer_id,
+        $inProgressTask->contractor_id
+    ) === false,
+    'Не исполнитель не может провалить задачу, находящуюся в работе'
 );
 
 assert(

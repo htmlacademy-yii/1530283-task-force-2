@@ -4,12 +4,16 @@ namespace TaskForce\models;
 
 use TaskForce\constants\TaskAction;
 use TaskForce\constants\TaskStatus;
+use TaskForce\actions\task\CancelAction as TaskCancelAction;
+use TaskForce\actions\task\RespondAction as TaskRespondAction;
+use TaskForce\actions\task\CompleteAction as TaskCompleteAction;
+use TaskForce\actions\task\FailAction as TaskFailAction;
 
 class Task
 {
-    private int $customer_id;
-    private ?int $contractor_id;
-    private string $status;
+    public int $customer_id;
+    public ?int $contractor_id;
+    public string $status;
 
     public function __construct(
         int $customer_id,
@@ -98,11 +102,11 @@ class Task
     protected function getCustomerAction(): array
     {
         if ($this->status === TaskStatus::NEW) {
-            return [TaskAction::CANCEL];
+            return [new TaskCancelAction()];
         }
 
         if ($this->status === TaskStatus::IN_PROGRESS) {
-            return [TaskAction::COMPLETE];
+            return [new TaskCompleteAction()];
         }
 
         return [];
@@ -111,11 +115,11 @@ class Task
     protected function getContractorAction(): array
     {
         if ($this->status === TaskStatus::NEW) {
-            return [TaskAction::RESPOND];
+            return [new TaskRespondAction()];
         }
 
         if ($this->status === TaskStatus::IN_PROGRESS) {
-            return [TaskAction::FAIL];
+            return [new TaskFailAction()];
         }
 
         return [];
