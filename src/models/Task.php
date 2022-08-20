@@ -8,6 +8,8 @@ use TaskForce\actions\task\CancelAction as TaskCancelAction;
 use TaskForce\actions\task\RespondAction as TaskRespondAction;
 use TaskForce\actions\task\CompleteAction as TaskCompleteAction;
 use TaskForce\actions\task\FailAction as TaskFailAction;
+use TaskForce\exceptions\task\ActionException as TaskActionException;
+use TaskForce\exceptions\task\StatusException as TaskStatusException;
 
 class Task
 {
@@ -20,6 +22,12 @@ class Task
         int $contractor_id = null,
         string $status = TaskStatus::NEW
     ) {
+        if (!self::validateStatus($status)) {
+            throw new TaskStatusException(
+                "$status is not valid status for Task"
+            );
+        }
+
         $this->customer_id = $customer_id;
         $this->contractor_id = $contractor_id;
         $this->status = $status;
@@ -44,6 +52,12 @@ class Task
             TaskStatus::COMPLETED => 'Выполнено',
             TaskStatus::FAILED => 'Провалено',
         ];
+    }
+
+    static private function validateStatus(string $status): bool
+    {
+        return array_search($status, array_keys(self::getStatusMap()))
+               !== false;
     }
 
     public function getNextStatus(string $action): ?string
@@ -75,7 +89,9 @@ class Task
 
             default:
             {
-                return null;
+                throw new TaskActionException(
+                    "$action is not valid action for Task"
+                );
             }
         }
     }
