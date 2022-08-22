@@ -62,7 +62,6 @@ CREATE TABLE tasks(
   latitude DECIMAL(9,7) NOT NULL,
   longitude DECIMAL(10,7) NOT NULL,
   budget INT UNSIGNED,
-  files JSON,
   term TIMESTAMP,
   FOREIGN KEY (customer_id) REFERENCES users(id)
     ON UPDATE CASCADE
