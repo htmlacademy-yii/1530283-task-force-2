@@ -9,7 +9,8 @@ use TaskForce\services\SQLGenerator;
 const SOURCE_DIRECTORY = 'data';
 const TARGET_DIRECTORY = 'queries';
 
-$sourceDirectoryIterator = new FilesystemIterator(SOURCE_DIRECTORY);
+$sourceDirectoryIterator =
+    new FilesystemIterator(SOURCE_DIRECTORY, FilesystemIterator::SKIP_DOTS);
 
 $insertQueryConverter = new InsertSQLConverter();
 
