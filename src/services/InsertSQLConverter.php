@@ -6,10 +6,6 @@ use SplFileObject;
 
 class InsertSQLConverter implements SQLConverter
 {
-    private ?SplFileObject $targetFile = null;
-    private ?SplFileObject $sourceFile = null;
-    private array|null|false $currentLine = null;
-
     static private function sanitizeValue(string $value): string
     {
         return preg_replace(
@@ -19,75 +15,72 @@ class InsertSQLConverter implements SQLConverter
         );
     }
 
-    public function setSourceFile(SplFileObject $sourceFile): void
-    {
-        $this->sourceFile = $sourceFile;
-        $this->readNextLine();
-    }
+    public function convert(
+        SplFileObject $sourceFile,
+        SplFileObject $targetFile
+    ): void {
+        $currentLine = $this->readNextLine($sourceFile);
 
-    public function setTargetFile(SplFileObject $targetFile): void
-    {
-        $this->targetFile = $targetFile;
-    }
+        $this->startWriting($sourceFile, $targetFile, $currentLine);
 
-    public function convert(): void
-    {
-        $this->startWriting();
+        $currentLine = $this->readNextLine($sourceFile);
 
-        $this->readNextLine();
+        while ($this->isCurrentLine($currentLine)) {
+            $this->writeValues($targetFile, $currentLine);
+            $currentLine = $this->readNextLine($sourceFile);
 
-        while ($this->isCurrentLine()) {
-            $this->writeValues();
-            $this->readNextLine();
-
-            if ($this->isCurrentLine()) {
-                $this->writeValueDivider();
+            if ($this->isCurrentLine($currentLine)) {
+                $this->writeValueDivider($targetFile);
             }
         }
 
-        $this->endWriting();
+        $this->endWriting($targetFile);
     }
 
-    private function readNextLine(): void
+    private function readNextLine(SplFileObject $sourceFile): array|null|false
     {
-        $this->currentLine = $this->sourceFile->fgetcsv();
+        return $sourceFile->fgetcsv();
     }
 
-    private function write(string $value): void
+    private function write(SplFileObject $targetFile, string $value): void
     {
-        $this->targetFile->fwrite($value);
+        $targetFile->fwrite($value);
     }
 
-    private function startWriting(): void
-    {
+    private function startWriting(
+        SplFileObject $sourceFile,
+        SplFileObject $targetFile,
+        array $currentLine
+    ): void {
         $this->write(
-            "INSERT INTO {$this->getTableName()} ({$this->getTableRows()})
+            $targetFile,
+            "INSERT INTO {$this->getTableName($sourceFile)} ({$this->getTableRows($currentLine)})
 VALUES 
 "
         );
     }
 
-    private function writeValues(): void
+    private function writeValues(SplFileObject $targetFile, array $currentLine): void
     {
-        $this->write("   ({$this->getValues()})");
+        $this->write($targetFile, "   ({$this->getValues($currentLine)})");
     }
 
-    private function writeValueDivider(): void
+    private function writeValueDivider(SplFileObject $targetFile): void
     {
-        $this->write(",\n");
+        $this->write($targetFile, ",\n");
     }
 
-    private function endWriting(): void
+    private function endWriting(SplFileObject $targetFile): void
     {
-        $this->write(";\n");
+        $this->write($targetFile, ";\n");
     }
 
-    private function getTableName(): string
+    private function getTableName(SplFileObject $sourceFile): string
     {
-        return explode('.', $this->sourceFile->getFilename())[0];
+        return explode('.', $sourceFile->getFilename())[0];
     }
 
-    private function getTableRows(): string
+    private function getTableRows(array $currentLine): string
     {
         return implode(
             ', ',
@@ -95,12 +88,12 @@ VALUES
                 function ($value) {
                     return self::sanitizeValue($value);
                 },
-                $this->currentLine
+                $currentLine
             )
         );
     }
 
-    private function getValues(): string
+    private function getValues(array $currentLine): string
     {
         return implode(
             ', ',
@@ -110,16 +103,16 @@ VALUES
 
                     return "'$sanitizedValue'";
                 },
-                $this->currentLine
+                $currentLine
             )
         );
     }
 
-    private function isCurrentLine(): bool
+    private function isCurrentLine(array $currentLine): bool
     {
-        return is_array($this->currentLine)
+        return is_array($currentLine)
                && count(
-                   array_filter($this->currentLine)
+                   array_filter($currentLine)
                );
     }
 }

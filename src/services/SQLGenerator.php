@@ -31,9 +31,8 @@ class SQLGenerator
             $sourceFile = $file->openFile();
             $targetFile =
                 new SplFileObject($this->getTargetFilePath($sourceFile), 'w');
-            $this->queryConverter->setTargetFile($targetFile);
-            $this->queryConverter->setSourceFile($sourceFile);
-            $this->queryConverter->convert();
+
+            $this->queryConverter->convert($sourceFile, $targetFile);
         }
     }
 
