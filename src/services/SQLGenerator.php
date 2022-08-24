@@ -28,6 +28,10 @@ class SQLGenerator
     public function generate()
     {
         foreach ($this->sourceDirectoryIterator as $file) {
+            if (!$file->isFile()) {
+                continue;
+            }
+
             $sourceFile = $file->openFile();
             $targetFile =
                 new SplFileObject($this->getTargetFilePath($sourceFile), 'w');
@@ -45,7 +49,8 @@ class SQLGenerator
 
     private function getTargetFilePath(SplFileObject $sourceFile): string
     {
-        return "{$this->targetPath}\\{$this->getTargetFileName($sourceFile)}";
+        return $this->targetPath . DIRECTORY_SEPARATOR
+               . $this->getTargetFileName($sourceFile);
     }
 
 }
