@@ -59,8 +59,8 @@ CREATE TABLE tasks(
   description VARCHAR(1000) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   contractor_id INT UNSIGNED,
-  latitude DECIMAL(9,7) NOT NULL,
-  longitude DECIMAL(10,7) NOT NULL,
+  latitude DECIMAL(9,7),
+  longitude DECIMAL(10,7),
   budget INT UNSIGNED,
   term TIMESTAMP,
   FOREIGN KEY (customer_id) REFERENCES users(id)
