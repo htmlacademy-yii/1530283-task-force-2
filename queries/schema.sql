@@ -88,11 +88,12 @@ CREATE TABLE task_files(
 CREATE TABLE responses(
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   task_id INT UNSIGNED NOT NULL,
-  contractor_id INT UNSIGNED NULL,
+  contractor_id INT UNSIGNED NOT NULL,
   status ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   comment VARCHAR(1000),
   price INT UNSIGNED,
+  CONSTRAINT task_contractor_unique UNIQUE(task_id, contractor_id),
   FOREIGN KEY (task_id) REFERENCES tasks(id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
@@ -103,7 +104,7 @@ CREATE TABLE responses(
 
 CREATE TABLE reviews(
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-  task_id INT UNSIGNED NOT NULL,
+  task_id INT UNSIGNED NOT NULL UNIQUE,
   rate TINYINT UNSIGNED NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   comment VARCHAR(1000),
