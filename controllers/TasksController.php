@@ -17,7 +17,7 @@ class TasksController extends Controller
     {
         $tasks = Task::find()
                      ->where(['status' => TaskStatus::NEW])
-                     ->with('category')
+                     ->with('category', 'city')
                      ->orderBy(['created_at' => SORT_DESC])
                      ->all();
 

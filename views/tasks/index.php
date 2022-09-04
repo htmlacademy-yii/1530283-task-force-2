@@ -8,11 +8,6 @@ use app\models\Task;
 
 $this->title = 'Новое';
 ?>
-<style>
-    .error {
-        color: red;
-    }
-</style>
 <div class="left-column">
     <h3 class="head-main head-task">Новые задания</h3>
     <?php
@@ -44,7 +39,8 @@ $this->title = 'Новое';
             </p>
             <div class="footer-task">
                 <p class="info-text town-text">
-                    <span class="error">Город (опц.)</span>
+                    <?= isset($task->city) ? $task->city->name
+                        : 'Любой город' ?>
                 </p>
                 <p class="info-text category-text">
                     <?= $task->category->name ?>
