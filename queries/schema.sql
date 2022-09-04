@@ -59,8 +59,7 @@ CREATE TABLE tasks(
   description VARCHAR(1000) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   contractor_id INT UNSIGNED,
-  latitude DECIMAL(9,7),
-  longitude DECIMAL(10,7),
+  city_id INT UNSIGNED,
   budget INT UNSIGNED,
   term TIMESTAMP,
   FOREIGN KEY (customer_id) REFERENCES users(id)
@@ -71,7 +70,10 @@ CREATE TABLE tasks(
       ON DELETE RESTRICT,
   FOREIGN KEY (contractor_id) REFERENCES users(id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE RESTRICT,
+  FOREIGN KEY (city_id) REFERENCES cities(id)
+      ON UPDATE CASCADE
+      ON DELETE RESTRICT
 ) ENGINE = InnoDB;
 
 CREATE TABLE task_files(

@@ -15,14 +15,14 @@ use yii\db\ActiveRecord;
  * @property string $description
  * @property string $created_at
  * @property int|null $contractor_id
- * @property float|null $latitude
- * @property float|null $longitude
+ * @property int|null $city_id
  * @property int|null $budget
  * @property string|null $term
  *
  * @property Category $category
  * @property User $contractor
  * @property User $customer
+ * @property City $city
  * @property Response[] $responses
  * @property Review $review
  * @property TaskFile[] $taskFiles
@@ -129,6 +129,16 @@ class Task extends ActiveRecord
     public function getCustomer()
     {
         return $this->hasOne(User::class, ['id' => 'customer_id']);
+    }
+
+    /**
+     * Gets query for [[City]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCity()
+    {
+        return $this->hasOne(City::class, ['id' => 'city_id']);
     }
 
     /**
