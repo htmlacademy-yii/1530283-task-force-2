@@ -10,10 +10,10 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property int $customer_id
  * @property int $category_id
- * @property string|null $status
+ * @property string $status
  * @property string $title
  * @property string $description
- * @property string|null $created_at
+ * @property string $created_at
  * @property int|null $contractor_id
  * @property float|null $latitude
  * @property float|null $longitude
