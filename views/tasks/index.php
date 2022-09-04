@@ -2,7 +2,7 @@
 
 /** @var yii\web\View $this */
 
-/** @var Task[] $tasks */
+/** @var Task[]|null $tasks */
 
 use app\models\Task;
 
@@ -10,67 +10,85 @@ $this->title = 'Новое';
 ?>
 <div class="left-column">
     <h3 class="head-main head-task">Новые задания</h3>
+
     <?php
-    foreach ($tasks as $task): ?>
-        <div class="task-card">
-            <div class="header-task">
-                <!-- Добавить ссылку на страницу задачи-->
-                <a href="#" class="link link--block link--big">
-                    <?= $task->title ?>
-                </a>
-                <?php
-                if (isset($task->budget)): ?>
-                    <p class="price price--task">
-                        <?= $task->budget ?> ₽
-                    </p>
-                <?php
-                endif; ?>
-            </div>
-            <p class="info-text">
+    if (isset($tasks)): ?>
+        <?php
+        if (count($tasks)): ?>
+            <?php
+            foreach ($tasks as $task): ?>
+                <div class="task-card">
+                    <div class="header-task">
+                        <!-- Добавить ссылку на страницу задачи-->
+                        <a href="#" class="link link--block link--big">
+                            <?= $task->title ?>
+                        </a>
+                        <?php
+                        if (isset($task->budget)): ?>
+                            <p class="price price--task">
+                                <?= $task->budget ?> ₽
+                            </p>
+                        <?php
+                        endif; ?>
+                    </div>
+                    <p class="info-text">
                 <span class="current-time">
                     <?= Yii::$app
                         ->formatter
                         ->asRelativeTime($task->created_at)
                     ?>
                 </span>
-            </p>
-            <p class="task-text">
-                <?= $task->description ?>
-            </p>
-            <div class="footer-task">
-                <p class="info-text town-text">
-                    <?= isset($task->city) ? $task->city->name
-                        : 'Любой город' ?>
-                </p>
-                <p class="info-text category-text">
-                    <?= $task->category->name ?>
-                </p>
-                <!-- Добавить ссылку на страницу задачи-->
-                <a href="#" class="button button--black">Смотреть Задание</a>
-            </div>
-        </div>
-    <?php
-    endforeach; ?>
+                    </p>
+                    <p class="task-text">
+                        <?= $task->description ?>
+                    </p>
+                    <div class="footer-task">
+                        <p class="info-text town-text">
+                            <?= isset($task->city) ? $task->city->name
+                                : 'Любой город' ?>
+                        </p>
+                        <p class="info-text category-text">
+                            <?= $task->category->name ?>
+                        </p>
+                        <!-- Добавить ссылку на страницу задачи-->
+                        <a href="#" class="button button--black">Смотреть
+                            Задание</a>
+                    </div>
+                </div>
+            <?php
+            endforeach; ?>
 
-    <div class="pagination-wrapper">
-        <ul class="pagination-list">
-            <li class="pagination-item mark">
-                <a href="#" class="link link--page"></a>
-            </li>
-            <li class="pagination-item">
-                <a href="#" class="link link--page">1</a>
-            </li>
-            <li class="pagination-item pagination-item--active">
-                <a href="#" class="link link--page">2</a>
-            </li>
-            <li class="pagination-item">
-                <a href="#" class="link link--page">3</a>
-            </li>
-            <li class="pagination-item mark">
-                <a href="#" class="link link--page"></a>
-            </li>
-        </ul>
-    </div>
+            <div class="pagination-wrapper">
+                <ul class="pagination-list">
+                    <li class="pagination-item mark">
+                        <a href="#" class="link link--page"></a>
+                    </li>
+                    <li class="pagination-item">
+                        <a href="#" class="link link--page">1</a>
+                    </li>
+                    <li class="pagination-item pagination-item--active">
+                        <a href="#" class="link link--page">2</a>
+                    </li>
+                    <li class="pagination-item">
+                        <a href="#" class="link link--page">3</a>
+                    </li>
+                    <li class="pagination-item mark">
+                        <a href="#" class="link link--page"></a>
+                    </li>
+                </ul>
+            </div>
+        <?php
+        else: ?>
+            <p>Задачи отсутствуют</p>
+        <?php
+        endif; ?>
+    <?php
+    else: ?>
+        <p>Не удалось загрузить данные</p>
+    <?php
+    endif; ?>
+
+
 </div>
 <div class="right-column">
     <div class="right-card black">
