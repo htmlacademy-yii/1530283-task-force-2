@@ -22,7 +22,7 @@ CREATE TABLE categories(
 CREATE TABLE users(
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
   password_hash CHAR(60) NOT NULL,
   city_id INT UNSIGNED NOT NULL,
   role ENUM('customer', 'contractor') DEFAULT 'customer',
