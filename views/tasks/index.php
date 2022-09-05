@@ -5,6 +5,7 @@
 /** @var Task[] $tasks */
 
 use app\models\Task;
+use yii\helpers\Html;
 
 $this->title = 'Новое';
 ?>
@@ -19,12 +20,12 @@ $this->title = 'Новое';
                 <div class="header-task">
                     <!-- Добавить ссылку на страницу задачи-->
                     <a href="#" class="link link--block link--big">
-                        <?= $task->title ?>
+                        <?= Html::encode($task->title) ?>
                     </a>
                     <?php
                     if (isset($task->budget)): ?>
                         <p class="price price--task">
-                            <?= $task->budget ?> ₽
+                            <?= Html::encode($task->budget) ?> ₽
                         </p>
                     <?php
                     endif; ?>
@@ -38,15 +39,15 @@ $this->title = 'Новое';
                 </span>
                 </p>
                 <p class="task-text">
-                    <?= $task->description ?>
+                    <?= Html::encode($task->description) ?>
                 </p>
                 <div class="footer-task">
                     <p class="info-text town-text">
-                        <?= isset($task->city) ? $task->city->name
+                        <?= isset($task->city) ? Html::encode($task->city->name)
                             : 'Любой город' ?>
                     </p>
                     <p class="info-text category-text">
-                        <?= $task->category->name ?>
+                        <?= Html::encode($task->category->name) ?>
                     </p>
                     <!-- Добавить ссылку на страницу задачи-->
                     <a href="#" class="button button--black">Смотреть
