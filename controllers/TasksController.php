@@ -16,16 +16,12 @@ class TasksController extends Controller
      */
     public function actionIndex()
     {
-        try {
-            $tasks = Task::find()
-                         ->where(['status' => TaskStatus::NEW])
-                         ->with('category', 'city')
-                         ->orderBy(['created_at' => SORT_DESC])
-                         ->all();
+        $tasks = Task::find()
+                     ->where(['status' => TaskStatus::NEW])
+                     ->with('category', 'city')
+                     ->orderBy(['created_at' => SORT_DESC])
+                     ->all();
 
-            return $this->render('index', ['tasks' => $tasks]);
-        } catch (Throwable $exception) {
-            return $this->render('index', ['tasks' => null]);
-        }
+        return $this->render('index', ['tasks' => $tasks]);
     }
 }
