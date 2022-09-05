@@ -16,9 +16,10 @@ use yii\db\ActiveRecord;
  * @property string $created_at
  * @property int|null $contractor_id
  * @property int|null $city_id
+ * @property float|null $latitude
+ * @property float|null $longitude
  * @property int|null $budget
  * @property string|null $term
- *
  * @property Category $category
  * @property User $contractor
  * @property User $customer
