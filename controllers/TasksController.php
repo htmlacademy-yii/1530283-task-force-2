@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use Yii;
+use app\models\Category;
 use yii\web\Controller;
 use app\models\Task;
 use TaskForce\constants\TaskStatus;
-use Throwable;
+use app\models\TaskFilterForm;
 
 class TasksController extends Controller
 {
@@ -16,12 +18,31 @@ class TasksController extends Controller
      */
     public function actionIndex()
     {
+        $categories = Category::find()
+                              ->select('name')
+                              ->indexBy('id')
+                              ->column();
+
+
         $tasks = Task::find()
                      ->where(['status' => TaskStatus::NEW])
                      ->with('category', 'city')
                      ->orderBy(['created_at' => SORT_DESC])
                      ->all();
 
-        return $this->render('index', ['tasks' => $tasks]);
+        $taskFilterFormModel = new TaskFilterForm();
+
+        if (Yii::$app->request->getIsGet()) {
+            $taskFilterFormModel->load(Yii::$app->request->get());
+        }
+
+        return $this->render(
+            'index',
+            [
+                'tasks' => $tasks,
+                'categories' => $categories,
+                'filterFormModel' => $taskFilterFormModel
+            ]
+        );
     }
 }

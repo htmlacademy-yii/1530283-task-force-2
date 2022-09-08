@@ -49,14 +49,14 @@ $this->beginBody() ?>
 
 <header class="page-header">
     <nav class="main-nav">
-        <a href='#' class="header-logo">
+        <a href='/' class="header-logo">
             <img class="logo-image" src="/img/logotype.png" width="227"
                  height="60" alt="taskforce">
         </a>
         <div class="nav-wrapper">
             <ul class="nav-list">
                 <li class="list-item list-item--active">
-                    <a class="link link--nav">Новое</a>
+                    <a href="/tasks" class="link link--nav">Новое</a>
                 </li>
                 <li class="list-item">
                     <a href="#" class="link link--nav">Мои задания</a>
