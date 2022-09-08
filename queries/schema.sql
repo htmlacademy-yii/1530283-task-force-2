@@ -22,7 +22,7 @@ CREATE TABLE categories(
 CREATE TABLE users(
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
   password_hash CHAR(60) NOT NULL,
   city_id INT UNSIGNED NOT NULL,
   role ENUM('customer', 'contractor') DEFAULT 'customer',
@@ -59,6 +59,7 @@ CREATE TABLE tasks(
   description VARCHAR(1000) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   contractor_id INT UNSIGNED,
+  city_id INT UNSIGNED,
   latitude DECIMAL(9,7),
   longitude DECIMAL(10,7),
   budget INT UNSIGNED,
@@ -71,7 +72,10 @@ CREATE TABLE tasks(
       ON DELETE RESTRICT,
   FOREIGN KEY (contractor_id) REFERENCES users(id)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT
+    ON DELETE RESTRICT,
+  FOREIGN KEY (city_id) REFERENCES cities(id)
+      ON UPDATE CASCADE
+      ON DELETE RESTRICT
 ) ENGINE = InnoDB;
 
 CREATE TABLE task_files(

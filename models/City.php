@@ -13,6 +13,7 @@ use yii\db\ActiveRecord;
  * @property float $longitude
  *
  * @property User[] $users
+ * @property Task[] $tasks
  */
 class City extends ActiveRecord
 {
@@ -57,6 +58,17 @@ class City extends ActiveRecord
     public function getUsers()
     {
         return $this->hasMany(User::class, ['city_id' => 'id'])
+                    ->inverseOf('city');
+    }
+
+    /**
+     * Gets query for [[Tasks]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTasks()
+    {
+        return $this->hasMany(Task::class, ['city_id' => 'id'])
                     ->inverseOf('city');
     }
 }

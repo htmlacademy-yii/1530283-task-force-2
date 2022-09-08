@@ -12,8 +12,8 @@ use yii\db\ActiveRecord;
  * @property string $email
  * @property string $password_hash
  * @property int $city_id
- * @property string|null $role
- * @property string|null $created_at
+ * @property string $role
+ * @property string $created_at
  * @property int|null $is_contacts_hidden
  * @property string|null $birthdate
  * @property string|null $phone_number
