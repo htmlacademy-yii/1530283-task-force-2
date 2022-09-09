@@ -18,23 +18,25 @@ class TasksController extends Controller
      */
     public function actionIndex()
     {
-        $categories = Category::find()
-                              ->select('name')
-                              ->indexBy('id')
-                              ->column();
-
-
-        $tasks = Task::find()
-                     ->where(['status' => TaskStatus::NEW])
-                     ->with('category', 'city')
-                     ->orderBy(['created_at' => SORT_DESC])
-                     ->all();
-
         $taskFilterFormModel = new TaskFilterForm();
 
         if (Yii::$app->request->getIsGet()) {
             $taskFilterFormModel->load(Yii::$app->request->get());
         }
+
+        $tasks = Task::find()
+                     ->with('category', 'city')
+                     ->where(['status' => TaskStatus::NEW])
+                     ->andWhere(
+                         ['category_id' => $taskFilterFormModel->categories]
+                     )
+                     ->orderBy(['created_at' => SORT_DESC])
+                     ->all();
+
+        $categories = Category::find()
+                              ->select('name')
+                              ->indexBy('id')
+                              ->column();
 
         return $this->render(
             'index',

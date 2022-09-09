@@ -92,30 +92,29 @@ $this->title = 'Новое';
         <div class="search-form">
             <?php
             $form = ActiveForm::begin(
-                [
-                    'method' => 'get',
-                    'action' => ['']
-                ]
+                ['method' => 'get', 'action' => ['']]
             ); ?>
-            <h4 class="head-card">Категории</h4>
 
+            <h4 class="head-card">Категории</h4>
             <?= $form
                 ->field(
                     $filterFormModel,
                     'categories',
-                    ['template' => '{label}{input}',]
+                    [
+                        'template' => '{input}',
+                        'options' => ['class' => 'form-group'],
+                    ]
                 )
                 ->checkboxList(
                     $categories,
                     [
                         'class' => 'checkbox-wrapper',
                         'itemOptions' => [
-                            'labelOptions' => [
-                                'class' => 'control-label',
-                            ]
+                            'labelOptions' => ['class' => 'control-label'],
                         ],
                     ]
-                )->label(false);
+                )
+                ->label(false);
             ?>
 
             <!--            <form>-->

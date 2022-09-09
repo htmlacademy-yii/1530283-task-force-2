@@ -13,7 +13,7 @@ use yii\base\Model;
  */
 class TaskFilterForm extends Model
 {
-    public $categories;
+    public string|array $categories = '';
     public $additional;
     public $period;
 
@@ -31,6 +31,7 @@ class TaskFilterForm extends Model
     public function attributeLabels()
     {
         return [
+            'categories' => 'Категории',
             'additional' => 'Дополнительно',
             'period' => 'Период',
         ];
