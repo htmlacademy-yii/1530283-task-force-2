@@ -24,23 +24,41 @@ class TasksController extends Controller
             $taskFilterFormModel->load(Yii::$app->request->get());
         }
 
-        $tasks = Task::find()
-                     ->with('category', 'city')
-                     ->where(['status' => TaskStatus::NEW])
-                     ->andWhere(
-                         ['category_id' => $taskFilterFormModel->categories]
-                     )
-                     ->andWhere(
-                         "`created_at` >= CURRENT_TIMESTAMP() - INTERVAL :period HOUR",
-                         [':period' => $taskFilterFormModel->hoursPeriod]
-                     )->orderBy(['created_at' => SORT_DESC])
-                     ->all();
+        $tasksQuery = Task::find()
+                          ->with('category', 'city')
+                          ->where(['status' => TaskStatus::NEW])
+                          ->andWhere(
+                              ['category_id' => $taskFilterFormModel->categories]
+                          )
+                          ->andWhere(
+                              "`created_at` >= CURRENT_TIMESTAMP() - INTERVAL :period HOUR",
+                              [':period' => $taskFilterFormModel->hoursPeriod]
+                          );
 
+        $additionals = $taskFilterFormModel->additionals;
+
+        if (!$additionals) {
+            $additionals = [];
+        }
+
+        if (in_array(TaskFilterForm::REMOTE_ADDITIONAL, $additionals)) {
+            $tasksQuery->andWhere(['city_id' => null]);
+        }
+
+//        todo: add filtering
+//        if (in_array(TaskFilterForm::RESPONSE_FREE_ADDITIONAL, $additionals)) {
+//        }
 
         $categories = Category::find()
                               ->select('name')
                               ->indexBy('id')
                               ->column();
+
+        $tasks = $tasksQuery
+            ->orderBy(['created_at' => SORT_DESC])
+            ->all();
+
+        var_dump($taskFilterFormModel->additionals);
 
         return $this->render(
             'index',
