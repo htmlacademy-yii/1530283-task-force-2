@@ -40,7 +40,7 @@ $availableStatuses = $contractorId
         TaskStatus::NEW,
         TaskStatus::CANCELLED,
     ];
-$createdDate = $faker->dateTimeBetween('-2 weeks')->format('c');
+$createdDate = $faker->dateTimeBetween('-36 hours')->format('c');
 
 return [
     'customer_id' => $faker->randomElement($customerIds),
