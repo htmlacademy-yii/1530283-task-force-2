@@ -3,11 +3,11 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Category;
 use yii\web\Controller;
 use app\models\Task;
-use TaskForce\constants\TaskStatus;
+use app\models\Category;
 use app\models\TaskFilterForm;
+use TaskForce\constants\TaskStatus;
 
 class TasksController extends Controller
 {
@@ -30,8 +30,12 @@ class TasksController extends Controller
                      ->andWhere(
                          ['category_id' => $taskFilterFormModel->categories]
                      )
-                     ->orderBy(['created_at' => SORT_DESC])
+                     ->andWhere(
+                         "`created_at` >= CURRENT_TIMESTAMP() - INTERVAL :period HOUR",
+                         [':period' => $taskFilterFormModel->hoursPeriod]
+                     )->orderBy(['created_at' => SORT_DESC])
                      ->all();
+
 
         $categories = Category::find()
                               ->select('name')

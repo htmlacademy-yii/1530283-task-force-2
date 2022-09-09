@@ -7,9 +7,9 @@
  */
 
 use app\models\Task;
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 use app\models\TaskFilterForm;
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
 
 $this->title = 'Новое';
 ?>
@@ -112,6 +112,33 @@ $this->title = 'Новое';
                         'itemOptions' => [
                             'labelOptions' => ['class' => 'control-label'],
                         ],
+                    ]
+                )
+                ->label(false);
+            ?>
+
+            <!--                <h4 class="head-card">Дополнительно</h4>-->
+            <!--                <div class="form-group">-->
+            <!--                    <label class="control-label" for="without-performer">-->
+            <!--                        <input id="without-performer" type="checkbox" checked>-->
+            <!--                        Без исполнителя</label>-->
+            <!--                </div>-->
+
+            <h4 class="head-card">Период</h4>
+            <?= $form
+                ->field(
+                    $filterFormModel,
+                    'hoursPeriod',
+                    [
+                        'template' => '{input}',
+                        'options' => ['class' => 'form-group'],
+                    ]
+                )
+                ->dropDownList(
+                    [
+                        '1' => '1 час',
+                        '12' => '12 часов',
+                        '24' => '24 часа',
                     ]
                 )
                 ->label(false);

@@ -7,15 +7,15 @@ use yii\base\Model;
 /**
  * This is the model class for task filter form.
  *
- * @property $categories
+ * @property string|array $categories
  * @property $additional
- * @property $period
+ * @property int $hoursPeriod
  */
 class TaskFilterForm extends Model
 {
     public string|array $categories = '';
     public $additional;
-    public $period;
+    public int $hoursPeriod = 1;
 
     /**
      * {@inheritdoc}
@@ -33,7 +33,7 @@ class TaskFilterForm extends Model
         return [
             'categories' => 'Категории',
             'additional' => 'Дополнительно',
-            'period' => 'Период',
+            'hoursPeriod' => 'Период',
         ];
     }
 
@@ -43,7 +43,7 @@ class TaskFilterForm extends Model
     public function rules(): array
     {
         return [
-            [['categories', 'additional', 'period'], 'safe']
+            [['categories', 'additional', 'hoursPeriod'], 'safe']
         ];
     }
 }
