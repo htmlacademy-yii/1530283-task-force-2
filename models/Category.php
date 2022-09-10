@@ -32,6 +32,8 @@ class Category extends ActiveRecord
         return [
             [['name', 'icon'], 'required'],
             [['name', 'icon'], 'string', 'max' => 255],
+            [['name'], 'unique'],
+            [['icon'], 'unique'],
         ];
     }
 
