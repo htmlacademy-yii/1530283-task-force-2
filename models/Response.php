@@ -40,6 +40,11 @@ class Response extends ActiveRecord
             [['created_at'], 'safe'],
             [['comment'], 'string', 'max' => 1000],
             [
+                ['task_id', 'contractor_id'],
+                'unique',
+                'targetAttribute' => ['task_id', 'contractor_id']
+            ],
+            [
                 ['task_id'],
                 'exist',
                 'skipOnError' => true,
