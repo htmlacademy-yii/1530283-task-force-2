@@ -20,6 +20,7 @@ $this->title = 'Новое';
     if (count($tasks)): ?>
         <?php
         foreach ($tasks as $task): ?>
+            <p>Responses count: <?= count($task->responses) ?></p>
             <div class="task-card">
                 <div class="header-task">
                     <!-- Добавить ссылку на страницу задачи-->
@@ -121,25 +122,19 @@ $this->title = 'Новое';
             <?= $form
                 ->field(
                     $filterFormModel,
-                    'additionals',
-                    [
-                        'template' => '{input}',
-                        'options' => ['class' => 'form-group'],
-                    ]
+                    'isRemoteOnly',
+                    ['template' => '{input}']
                 )
-                ->checkboxList(
-                    [
-                        TaskFilterForm::REMOTE_ADDITIONAL => 'Удаленная работа',
-                        TaskFilterForm::RESPONSE_FREE_ADDITIONAL => 'Без откликов',
-                    ],
-                    [
-                        'class' => 'checkbox-wrapper',
-                        'itemOptions' => [
-                            'labelOptions' => ['class' => 'control-label'],
-                        ],
-                    ]
+                ->checkbox(['labelOptions' => ['class' => 'control-label']]);
+            ?>
+
+            <?= $form
+                ->field(
+                    $filterFormModel,
+                    'withoutResponsesOnly',
+                    ['template' => '{input}']
                 )
-                ->label(false);
+                ->checkbox(['labelOptions' => ['class' => 'control-label']]);
             ?>
 
             <h4 class="head-card">Период</h4>

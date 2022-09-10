@@ -35,30 +35,27 @@ class TasksController extends Controller
                               [':period' => $taskFilterFormModel->hoursPeriod]
                           );
 
-        $additionals = $taskFilterFormModel->additionals;
 
-        if (!$additionals) {
-            $additionals = [];
-        }
-
-        if (in_array(TaskFilterForm::REMOTE_ADDITIONAL, $additionals)) {
+        if ($taskFilterFormModel->isRemoteOnly) {
             $tasksQuery->andWhere(['city_id' => null]);
+        } else {
+            // todo: Показываются только задания без привязки к адресу, а также задания из города текущего пользователя.
         }
 
-//        todo: add filtering
-//        if (in_array(TaskFilterForm::RESPONSE_FREE_ADDITIONAL, $additionals)) {
-//        }
+        if ($taskFilterFormModel->withoutResponsesOnly) {
+            // todo: добавляет к условию фильтрации показ заданий только без откликов исполнителей
+        }
 
         $categories = Category::find()
                               ->select('name')
                               ->indexBy('id')
                               ->column();
 
+
         $tasks = $tasksQuery
             ->orderBy(['created_at' => SORT_DESC])
             ->all();
 
-        var_dump($taskFilterFormModel->additionals);
 
         return $this->render(
             'index',

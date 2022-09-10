@@ -8,16 +8,15 @@ use yii\base\Model;
  * This is the model class for task filter form.
  *
  * @property string|array $categories
- * @property string|array $additionals
+ * @property bool $isRemoteOnly
+ * @property bool $withoutResponsesOnly
  * @property int $hoursPeriod
  */
 class TaskFilterForm extends Model
 {
-    const REMOTE_ADDITIONAL = 'REMOTE_ONLY';
-    const RESPONSE_FREE_ADDITIONAL = 'WITHOUT_RESPONSES_ONLY';
-
     public string|array $categories = '';
-    public string|array $additionals = '';
+    public bool $isRemoteOnly = false;
+    public bool $withoutResponsesOnly = false;
     public int $hoursPeriod = 1;
 
     /**
@@ -35,7 +34,8 @@ class TaskFilterForm extends Model
     {
         return [
             'categories' => 'Категории',
-            'additionals' => 'Дполнительно',
+            'isRemoteOnly' => 'Удаленная работа',
+            'withoutResponsesOnly' => 'Без откликов',
             'hoursPeriod' => 'Период',
         ];
     }
@@ -46,7 +46,15 @@ class TaskFilterForm extends Model
     public function rules(): array
     {
         return [
-            [['categories', 'additionals', 'hoursPeriod'], 'safe']
+            [
+                [
+                    'categories',
+                    'isRemoteOnly',
+                    'withoutResponsesOnly',
+                    'hoursPeriod'
+                ],
+                'safe'
+            ]
         ];
     }
 }
