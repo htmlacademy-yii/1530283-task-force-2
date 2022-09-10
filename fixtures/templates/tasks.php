@@ -5,10 +5,10 @@
  */
 
 use app\models\User;
+use app\models\City;
+use app\models\Category;
 use TaskForce\constants\UserRole;
 use TaskForce\constants\TaskStatus;
-use app\models\Category;
-use app\models\City;
 
 $city = null;
 $contractorId = null;
