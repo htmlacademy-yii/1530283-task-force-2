@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use app\models\Task;
 use app\models\Category;
+use app\models\Response;
 use app\models\TaskFilterForm;
 use TaskForce\constants\TaskStatus;
 
@@ -35,7 +36,6 @@ class TasksController extends Controller
                               [':period' => $taskFilterFormModel->hoursPeriod]
                           );
 
-
         if ($taskFilterFormModel->isRemoteOnly) {
             $tasksQuery->andWhere(['city_id' => null]);
         } else {
@@ -43,14 +43,16 @@ class TasksController extends Controller
         }
 
         if ($taskFilterFormModel->withoutResponsesOnly) {
-            // todo: добавляет к условию фильтрации показ заданий только без откликов исполнителей
+            $responses = Response::find()->all();
+            $respondedTaskIds =
+                array_unique(array_column($responses, 'task_id'));
+            $tasksQuery->andWhere(['not', ['id' => $respondedTaskIds]]);
         }
 
         $categories = Category::find()
                               ->select('name')
                               ->indexBy('id')
                               ->column();
-
 
         $tasks = $tasksQuery
             ->orderBy(['created_at' => SORT_DESC])

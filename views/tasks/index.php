@@ -20,7 +20,6 @@ $this->title = 'Новое';
     if (count($tasks)): ?>
         <?php
         foreach ($tasks as $task): ?>
-            <p>Responses count: <?= count($task->responses) ?></p>
             <div class="task-card">
                 <div class="header-task">
                     <!-- Добавить ссылку на страницу задачи-->
