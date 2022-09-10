@@ -58,7 +58,6 @@ class TasksController extends Controller
             ->orderBy(['created_at' => SORT_DESC])
             ->all();
 
-
         return $this->render(
             'index',
             [
