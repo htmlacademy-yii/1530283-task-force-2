@@ -22,5 +22,6 @@ class m220910_102958_fill_cities_table extends Migration
     public function safeDown()
     {
         $this->delete('cities');
+        $this->execute('ALTER TABLE `cities` AUTO_INCREMENT = 1;');
     }
 }

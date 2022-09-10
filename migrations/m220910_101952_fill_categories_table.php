@@ -22,5 +22,6 @@ class m220910_101952_fill_categories_table extends Migration
     public function safeDown()
     {
         $this->delete('categories');
+        $this->execute('ALTER TABLE `categories` AUTO_INCREMENT = 1;');
     }
 }
