@@ -5,10 +5,10 @@
  */
 
 use app\models\User;
+use app\models\City;
+use app\models\Category;
 use TaskForce\constants\UserRole;
 use TaskForce\constants\TaskStatus;
-use app\models\Category;
-use app\models\City;
 
 $city = null;
 $contractorId = null;
@@ -40,7 +40,7 @@ $availableStatuses = $contractorId
         TaskStatus::NEW,
         TaskStatus::CANCELLED,
     ];
-$createdDate = $faker->dateTimeBetween('-2 weeks')->format('c');
+$createdDate = $faker->dateTimeBetween('-36 hours')->format('c');
 
 return [
     'customer_id' => $faker->randomElement($customerIds),

@@ -1,11 +1,13 @@
 <?php
 
-/** @var yii\web\View $this */
-
-/** @var string $content */
+/**
+ * @var yii\web\View $this
+ * @var string $content
+ */
 
 use app\assets\AppAsset;
 use yii\bootstrap5\Html;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 
@@ -49,14 +51,14 @@ $this->beginBody() ?>
 
 <header class="page-header">
     <nav class="main-nav">
-        <a href='#' class="header-logo">
+        <a href=<?= Url::to('/') ?> class="header-logo">
             <img class="logo-image" src="/img/logotype.png" width="227"
                  height="60" alt="taskforce">
         </a>
         <div class="nav-wrapper">
             <ul class="nav-list">
                 <li class="list-item list-item--active">
-                    <a class="link link--nav">Новое</a>
+                    <a href="<?= Url::to('/tasks') ?>" class="link link--nav">Новое</a>
                 </li>
                 <li class="list-item">
                     <a href="#" class="link link--nav">Мои задания</a>

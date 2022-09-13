@@ -10,7 +10,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property int $task_id
  * @property int $rate
- * @property string|null $created_at
+ * @property string $created_at
  * @property string|null $comment
  *
  * @property Task $task
@@ -35,6 +35,7 @@ class Review extends ActiveRecord
             [['task_id', 'rate'], 'integer'],
             [['created_at'], 'safe'],
             [['comment'], 'string', 'max' => 1000],
+            [['task_id'], 'unique'],
             [
                 ['task_id'],
                 'exist',

@@ -34,6 +34,7 @@ class City extends ActiveRecord
             [['name', 'latitude', 'longitude'], 'required'],
             [['latitude', 'longitude'], 'number'],
             [['name'], 'string', 'max' => 255],
+            [['name'], 'unique'],
         ];
     }
 

@@ -51,6 +51,7 @@ class User extends ActiveRecord
             [['phone_number'], 'string', 'max' => 11],
             [['telegram'], 'string', 'max' => 64],
             [['description'], 'string', 'max' => 1000],
+            [['email'], 'unique'],
             [
                 ['city_id'],
                 'exist',

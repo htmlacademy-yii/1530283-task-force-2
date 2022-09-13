@@ -9,9 +9,9 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property int $task_id
- * @property int|null $contractor_id
- * @property string|null $status
- * @property string|null $created_at
+ * @property int $contractor_id
+ * @property string $status
+ * @property string $created_at
  * @property string|null $comment
  * @property int|null $price
  *
@@ -34,11 +34,16 @@ class Response extends ActiveRecord
     public function rules()
     {
         return [
-            [['task_id'], 'required'],
+            [['task_id', 'contractor_id'], 'required'],
             [['task_id', 'contractor_id', 'price'], 'integer'],
             [['status'], 'string'],
             [['created_at'], 'safe'],
             [['comment'], 'string', 'max' => 1000],
+            [
+                ['task_id', 'contractor_id'],
+                'unique',
+                'targetAttribute' => ['task_id', 'contractor_id']
+            ],
             [
                 ['task_id'],
                 'exist',

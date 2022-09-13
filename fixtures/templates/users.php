@@ -4,9 +4,8 @@
  * @var $index integer
  */
 
-
-use TaskForce\constants\UserRole;
 use app\models\City;
+use TaskForce\constants\UserRole;
 
 $cities = City::find()->select('id')->all();
 $cityIds = array_column($cities, 'id');
