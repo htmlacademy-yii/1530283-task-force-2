@@ -43,6 +43,9 @@ $config = [
             ],
         ],
         'db' => $db,
+        'formatter' => [
+            'locale' => 'ru-RU',
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,

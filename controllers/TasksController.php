@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use app\models\Task;
 use app\models\Category;
 use app\models\Response;
@@ -64,6 +65,38 @@ class TasksController extends Controller
                 'tasks' => $tasks,
                 'categories' => $categories,
                 'filterFormModel' => $taskFilterFormModel
+            ]
+        );
+    }
+
+    /**
+     * Показывает ....
+     *
+     * @return string
+     */
+    public function actionView(int $id)
+    {
+        $task = Task::find()
+                    ->where(['id' => $id])
+                    ->with('category')
+                    ->one();
+
+        if (!$task) {
+            throw new NotFoundHttpException();
+        }
+
+        $responses = Response::find()
+                             ->where(['task_id' => $task->id])
+                             ->with('contractor')
+                             ->all();
+
+        var_dump(count($responses));
+
+        return $this->render(
+            'view',
+            [
+                'task' => $task,
+                'responses' => $responses,
             ]
         );
     }
