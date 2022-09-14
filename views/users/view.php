@@ -54,8 +54,12 @@ use \yii\helpers\Url;
                     <?php
                     foreach ($user->categories as $category): ?>
                         <li class="special-item">
-                            <!--                            todo: добавить ссылку на категорию-->
-                            <a href="#" class="link link--regular">
+                            <a href="<?= Url::to(
+                                [
+                                    '/tasks/index',
+                                    'categories[]' => $category->id
+                                ]
+                            ) ?>" class="link link--regular">
                                 <?= $category->name ?>
                             </a>
                         </li>

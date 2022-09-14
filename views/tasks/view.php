@@ -76,7 +76,7 @@ $this->title = 'Просмотр задачи';
                             <?php
                             endforeach; ?>
                         </div>
-                        <!-- todo: Добавить количество отзывов и склонение-->
+                        <!-- todo: Добавить склонение количества отзывов-->
                         <p class="reviews"><?= count(
                                 $response->contractor->tasks
                             ) ?>
