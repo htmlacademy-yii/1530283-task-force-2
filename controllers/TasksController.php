@@ -9,6 +9,7 @@ use app\models\Task;
 use app\models\Category;
 use app\models\Response;
 use app\models\TaskFilterForm;
+use yii\db\ActiveQuery;
 use TaskForce\constants\TaskStatus;
 
 class TasksController extends Controller
@@ -87,10 +88,22 @@ class TasksController extends Controller
 
         $responses = Response::find()
                              ->where(['task_id' => $task->id])
-                             ->with('contractor')
+                             ->with(
+                                 [
+                                     'contractor' => function (
+                                         ActiveQuery $query
+                                     ) {
+                                         $query->with('tasks');
+                                     }
+                                 ]
+                             )
+                             ->orderBy('created_at DESC')
                              ->all();
 
-        var_dump(count($responses));
+//        print '<pre>';
+//        var_dump(count($responses));
+//        print_r($responses[0]->contractor->tasks);
+//        print '</pre>';
 
         return $this->render(
             'view',

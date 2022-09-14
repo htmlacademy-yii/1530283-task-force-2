@@ -11,7 +11,7 @@ use TaskForce\constants\TaskStatus;
 use TaskForce\constants\ResponseStatus;
 use TaskForce\helpers\FixtureHelper;
 
-$contractors = User::find()->where(['role' => UserRole::CUSTOMER])->all();
+$contractors = User::find()->where(['role' => UserRole::CONTRACTOR])->all();
 $newTasks = Task::find()->where(['status' => TaskStatus::NEW])->all();
 
 $contractorIds = array_column($contractors, 'id');

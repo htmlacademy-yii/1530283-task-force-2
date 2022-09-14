@@ -49,7 +49,7 @@ $this->title = 'Просмотр задачи';
 
         <?php
         if (!count($responses)): ?>
-            <p class="head-regular">Нет откликов</p>
+            <p>Нет откликов</p>
         <?php
         endif; ?>
 
@@ -61,16 +61,20 @@ $this->title = 'Просмотр задачи';
                      width="146"
                      height="156" alt="Фото заказчиков">
                 <div class="feedback-wrapper">
-                    <!-- todo: Добавить ссылку на профиль исполнителя-->
-                    <a href="#" class="link link--block link--big">
+                    <a href="<?= Url::to(
+                        ['/users/view', 'id' => $response->contractor->id]
+                    ) ?>"
+                       class="link link--block link--big">
                         <?= Html::encode($response->contractor->name) ?>
                     </a>
                     <div class="response-wrapper">
-                        <div class="stars-rating small"><span
-                                    class="fill-star">&nbsp;</span><span
-                                    class="fill-star">&nbsp;</span><span
-                                    class="fill-star">&nbsp;</span><span
-                                    class="fill-star">&nbsp;</span><span>&nbsp;</span>
+                        <div class="stars-rating small">
+                            <?php
+                            foreach (range(1, 5) as $index): ?>
+                                <span <?= $index <= 3.5 ? 'class="fill-star"'
+                                    : '' ?>>&nbsp;</span>
+                            <?php
+                            endforeach; ?>
                         </div>
                         <!-- todo: Добавить количество отзывов-->
                         <p class="reviews">2 отзыва</p>
