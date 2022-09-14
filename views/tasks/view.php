@@ -76,8 +76,11 @@ $this->title = 'Просмотр задачи';
                             <?php
                             endforeach; ?>
                         </div>
-                        <!-- todo: Добавить количество отзывов-->
-                        <p class="reviews">2 отзыва</p>
+                        <!-- todo: Добавить количество отзывов и склонение-->
+                        <p class="reviews"><?= count(
+                                $response->contractor->tasks
+                            ) ?>
+                            отзыва</p>
                     </div>
                     <p class="response-message">
                         <?= Html::encode($response->comment) ?>

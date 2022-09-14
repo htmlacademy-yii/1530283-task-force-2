@@ -86,19 +86,28 @@ class TasksController extends Controller
             throw new NotFoundHttpException();
         }
 
+        $contractorReviewedTasksQuery = function (ActiveQuery $query) {
+            return $query->joinWith(
+                'review',
+                true,
+                'RIGHT JOIN'
+            );
+        };
+
+        $responseContractorQuery = function (
+            ActiveQuery $query
+        ) use ($contractorReviewedTasksQuery) {
+            return $query->with(['tasks' => $contractorReviewedTasksQuery]);
+        };
+
         $responses = Response::find()
                              ->where(['task_id' => $task->id])
                              ->with(
-                                 [
-                                     'contractor' => function (
-                                         ActiveQuery $query
-                                     ) {
-                                         $query->with('tasks');
-                                     }
-                                 ]
+                                 ['contractor' => $responseContractorQuery]
                              )
                              ->orderBy('created_at DESC')
                              ->all();
+
 
 //        print '<pre>';
 //        var_dump(count($responses));
