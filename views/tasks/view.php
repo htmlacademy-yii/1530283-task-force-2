@@ -11,6 +11,7 @@ use app\models\Response;
 use yii\helpers\Html;
 use \yii\helpers\Url;
 use TaskForce\models\Task as TaskHelper;
+use TaskForce\helpers\UserHelper;
 
 Yii::$app->formatter->locale = 'ru-RU';
 
@@ -57,7 +58,9 @@ $this->title = 'Просмотр задачи';
         foreach ($responses as $response): ?>
             <div class="response-card">
                 <img class="customer-photo"
-                     src="<?= $response->contractor->avatar_url ?>"
+                     src="<?= UserHelper::ensureAvatarUrl(
+                         $response->contractor
+                     ) ?>"
                      width="146"
                      height="156" alt="Фото заказчиков">
                 <div class="feedback-wrapper">

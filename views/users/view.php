@@ -12,7 +12,8 @@ use yii\web\View;
 use app\models\Task;
 use app\models\User;
 use yii\helpers\Html;
-use \yii\helpers\Url;
+use yii\helpers\Url;
+use TaskForce\helpers\UserHelper;
 
 ?>
 
@@ -24,7 +25,7 @@ use \yii\helpers\Url;
         <div class="user-card">
             <div class="photo-rate">
                 <img class="card-photo"
-                     src="<?= $user->avatar_url ?>"
+                     src="<?= UserHelper::ensureAvatarUrl($user) ?>"
                      width="191"
                      height="190" alt="Фото пользователя">
                 <!--                            todo: добавить рейтинг-->
@@ -95,7 +96,9 @@ use \yii\helpers\Url;
         foreach ($reviewedTasks as $reviewedTask): ?>
             <div class="response-card">
                 <img class="customer-photo"
-                     src="<?= $reviewedTask->customer->avatar_url ?>"
+                     src="<?= UserHelper::ensureAvatarUrl(
+                         $reviewedTask->customer
+                     ) ?>"
                      width="120"
                      height="127" alt="Фото заказчиков">
                 <div class="feedback-wrapper">
