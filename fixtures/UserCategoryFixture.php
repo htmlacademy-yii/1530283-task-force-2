@@ -2,7 +2,7 @@
 
 namespace app\fixtures;
 
-use yii\test\ActiveFixture;
+use app\fixtures\test\ActiveFixture;
 
 class UserCategoryFixture extends ActiveFixture
 {

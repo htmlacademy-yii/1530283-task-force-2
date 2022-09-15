@@ -2,11 +2,10 @@
 
 namespace app\fixtures;
 
-use yii\test\ActiveFixture;
-
-use app\models\Review;
+use app\fixtures\test\ActiveFixture;
 
 class ReviewFixture extends ActiveFixture
 {
-    public $modelClass = Review::class;
+    public $tableName = 'reviews';
+    public $depends = [TaskFixture::class, UserFixture::class];
 }

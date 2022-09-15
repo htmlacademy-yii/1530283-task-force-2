@@ -12,15 +12,21 @@ $completedTasks =
 
 $completedTaskIds = array_column($completedTasks, 'id');
 
-$taskId = $faker->unique()->randomElement($completedTaskIds);
+try {
+    $taskId = $faker->unique()->randomElement($completedTaskIds);
 
-$task = Task::findOne($taskId);
+    $task = Task::findOne($taskId);
 
-$createdDate = $faker->dateTimeBetween($task->created_at)->format('c');
+    $createdDate = $faker->dateTimeBetween($task->created_at)->format('c');
 
-return [
-    'task_id' => $taskId,
-    'rate' => $faker->numberBetween(1, 2),
-    'created_at' => $createdDate,
-    'comment' => $faker->boolean ? $faker->paragraph(3, true) : null,
-];
+    return [
+        'task_id' => $taskId,
+        'rate' => $faker->numberBetween(1, 2),
+        'created_at' => $createdDate,
+        'comment' => $faker->boolean ? $faker->paragraph(3, true) : null,
+    ];
+} catch (Throwable $error) {
+    return null;
+}
+
+

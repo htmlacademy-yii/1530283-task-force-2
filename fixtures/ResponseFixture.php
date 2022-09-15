@@ -2,11 +2,9 @@
 
 namespace app\fixtures;
 
-use yii\test\ActiveFixture;
-
-use app\models\Response;
+use app\fixtures\test\ActiveFixture;
 
 class ResponseFixture extends ActiveFixture
 {
-    public $modelClass = Response::class;
+    public $tableName = 'responses';
 }

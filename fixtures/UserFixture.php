@@ -2,11 +2,9 @@
 
 namespace app\fixtures;
 
-use yii\test\ActiveFixture;
-
-use app\models\User;
+use app\fixtures\test\ActiveFixture;
 
 class UserFixture extends ActiveFixture
 {
-    public $modelClass = User::class;
+    public $tableName = 'users';
 }

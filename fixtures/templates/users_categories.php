@@ -16,12 +16,16 @@ $categoryIds = array_column($categories, 'id');
 $userCategoryCombinations =
     FixtureHelper::getCombinations($userIds, $categoryIds);
 
-list(
-    $userId,
-    $categoryId
-    ) = $faker->unique()->randomElement($userCategoryCombinations);
+try {
+    list(
+        $userId,
+        $categoryId
+        ) = $faker->unique()->randomElement($userCategoryCombinations);
 
-return [
-    'user_id' => $userId,
-    'category_id' => $categoryId,
-];
+    return [
+        'user_id' => $userId,
+        'category_id' => $categoryId,
+    ];
+} catch (Throwable $error) {
+    return null;
+}
