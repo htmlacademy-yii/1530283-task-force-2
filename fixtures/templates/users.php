@@ -32,4 +32,5 @@ return [
         ->paragraph(3, true) : null,
     'avatar_url' => $faker->boolean ? $faker
         ->imageUrl(150, 150) : null,
+    'rating' => 0,
 ];

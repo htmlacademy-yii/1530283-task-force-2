@@ -21,7 +21,7 @@ try {
 
     return [
         'task_id' => $taskId,
-        'rate' => $faker->numberBetween(1, 2),
+        'rate' => $faker->numberBetween(1, 5),
         'created_at' => $createdDate,
         'comment' => $faker->boolean ? $faker->paragraph(3, true) : null,
     ];
