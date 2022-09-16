@@ -29,14 +29,14 @@ class TasksController extends Controller
 
         $tasksQuery = Task::find()
                           ->with('category', 'city')
-                          ->where(['status' => TaskStatus::NEW])
-                          ->andWhere(
-                              ['category_id' => $taskFilterFormModel->categories]
-                          )
-                          ->andWhere(
-                              "`created_at` >= CURRENT_TIMESTAMP() - INTERVAL :period HOUR",
-                              [':period' => $taskFilterFormModel->hoursPeriod]
-                          );
+                          ->where(['status' => TaskStatus::NEW]);
+
+
+        if ($taskFilterFormModel->categories) {
+            $tasksQuery->andWhere(
+                ['category_id' => $taskFilterFormModel->categories]
+            );
+        }
 
         if ($taskFilterFormModel->isRemoteOnly) {
             $tasksQuery->andWhere(['city_id' => null]);
@@ -49,6 +49,13 @@ class TasksController extends Controller
             $respondedTaskIds =
                 array_unique(array_column($responses, 'task_id'));
             $tasksQuery->andWhere(['not', ['id' => $respondedTaskIds]]);
+        }
+
+        if ($taskFilterFormModel->hoursPeriod) {
+            $tasksQuery->andWhere(
+                "`created_at` >= CURRENT_TIMESTAMP() - INTERVAL :period HOUR",
+                [':period' => $taskFilterFormModel->hoursPeriod]
+            );
         }
 
         $categories = Category::find()
