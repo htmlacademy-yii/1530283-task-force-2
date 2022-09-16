@@ -12,6 +12,7 @@ use yii\helpers\Html;
 use \yii\helpers\Url;
 use TaskForce\helpers\TaskHelper;
 use TaskForce\helpers\UserHelper;
+use TaskForce\helpers\StarsRatingHelper;
 
 $this->title = 'Просмотр задачи';
 ?>
@@ -69,14 +70,10 @@ $this->title = 'Просмотр задачи';
                         <?= Html::encode($response->contractor->name) ?>
                     </a>
                     <div class="response-wrapper">
-                        <div class="stars-rating small">
-                            <?php
-                            foreach (range(1, 5) as $index): ?>
-                                <span <?= $index <= 3.5 ? 'class="fill-star"'
-                                    : '' ?>>&nbsp;</span>
-                            <?php
-                            endforeach; ?>
-                        </div>
+                        <?= StarsRatingHelper::getStarsRating(
+                            $response->contractor->rating,
+                            'small'
+                        ) ?>
                         <p class="reviews"><?=
                             UserHelper::formatReviewsCount(
                                 count(
