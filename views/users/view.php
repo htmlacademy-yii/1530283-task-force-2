@@ -7,6 +7,7 @@
  * @var int $failedTasksCount
  * @var int $ratingPosition
  * @var int|null $age
+ * @var bool $isBusy
  */
 
 use yii\web\View;
@@ -31,7 +32,6 @@ use floor12\phone\PhoneFormatter;
                      src="<?= UserHelper::ensureAvatarUrl($user) ?>"
                      width="191"
                      height="190" alt="Фото пользователя">
-                <!--                            todo: добавить рейтинг-->
                 <div class="card-rate">
                     <?= StarsRatingHelper::getStarsRating(
                         $user->rating,
@@ -150,8 +150,8 @@ use floor12\phone\PhoneFormatter;
                 <dd><?= Yii::$app->formatter
                         ->asDate($user->created_at, 'dd MMMM, HH:mm') ?></dd>
                 <dt>Статус</dt>
-                <!--                            todo: добавить статус-->
-                <dd>Открыт для новых заказов</dd>
+                <dd><?=
+                    $isBusy ? 'Занят' : 'Открыт для новых заказов' ?></dd>
             </dl>
         </div>
         <?php

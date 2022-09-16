@@ -66,8 +66,14 @@ class UsersController extends Controller
 
         $ratingPosition = $betterContractors + 1;
 
-//        todo: Статусом может быть либо «Открыт для новых заказов», если пользователь сейчас не занят на активном задании, либо «Занят»,
-// если пользователь сейчас выполняет заказ.
+        $isBusy = Task::find()
+                      ->where(
+                          [
+                              'contractor_id' => $id,
+                              'status' => TaskStatus::IN_PROGRESS
+                          ]
+                      )
+                      ->exists();
 
         return $this->render(
             'view',
@@ -78,6 +84,7 @@ class UsersController extends Controller
                 'completedTasksCount' => $completedTasksCount,
                 'failedTasksCount' => $failedTasksCount,
                 'ratingPosition' => $ratingPosition,
+                'isBusy' => $isBusy,
             ]
         );
     }
