@@ -96,6 +96,8 @@ use floor12\phone\PhoneFormatter;
 
         <?php
         foreach ($reviewedTasks as $reviewedTask): ?>
+            <?php
+            $review = $reviewedTask->review; ?>
             <div class="response-card">
                 <img class="customer-photo"
                      src="<?= UserHelper::ensureAvatarUrl(
@@ -106,28 +108,22 @@ use floor12\phone\PhoneFormatter;
                 <div class="feedback-wrapper">
                     <p class="feedback">
                         <?php
-                        if ($reviewedTask->review->comment): ?>
-                            «<?= Html::encode(
-                                $reviewedTask->review->comment
-                            ) ?>»
+                        if ($review->comment): ?>
+                            «<?= Html::encode($review->comment) ?>»
                         <?php
                         endif; ?>
                     </p>
                     <p class="task">Задание «<a href="<?=
                         Url::to(['/tasks/view', 'id' => $reviewedTask->id])
-                        ?>"
-                                                class="link link--small"><?=
+                        ?>" class="link link--small"><?=
                             Html::encode($reviewedTask->title)
                             ?></a>» выполнено</p>
                 </div>
                 <div class="feedback-wrapper">
-                    <!--                            todo: добавить оценку-->
-                    <div class="stars-rating small"><span
-                                class="fill-star">&nbsp;</span><span
-                                class="fill-star">&nbsp;</span><span
-                                class="fill-star">&nbsp;</span><span
-                                class="fill-star">&nbsp;</span><span>&nbsp;</span>
-                    </div>
+                    <?= StarsRatingHelper::getStarsRating(
+                        $review->rate,
+                        'small'
+                    ) ?>
                     <p class="info-text">
                         <span class="current-time">
                             <?= Yii::$app
