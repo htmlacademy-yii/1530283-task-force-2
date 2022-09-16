@@ -13,6 +13,7 @@ use app\models\Task;
 use app\models\User;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use TaskForce\helpers\StarsRatingHelper;
 use TaskForce\helpers\UserHelper;
 use floor12\phone\PhoneFormatter;
 
@@ -31,14 +32,13 @@ use floor12\phone\PhoneFormatter;
                      height="190" alt="Фото пользователя">
                 <!--                            todo: добавить рейтинг-->
                 <div class="card-rate">
-                    <div class="stars-rating big"><span
-                                class="fill-star">&nbsp;</span><span
-                                class="fill-star">&nbsp;</span><span
-                                class="fill-star">&nbsp;</span><span
-                                class="fill-star">&nbsp;</span><span>&nbsp;</span>
-                    </div>
-                    <!--                            todo: добавить рейтинг-->
-                    <span class="current-rate">4.23</span>
+                    <?= StarsRatingHelper::getStarsRating(
+                        $user->rating,
+                        'big'
+                    ) ?>
+                    <span class="current-rate">
+                        <?= $user->rating ?>
+                    </span>
                 </div>
             </div>
             <?php
