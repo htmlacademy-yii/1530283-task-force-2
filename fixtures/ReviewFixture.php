@@ -32,9 +32,11 @@ class ReviewFixture extends ActiveFixture
                 Review::find()
                       ->joinWith(['task' => $reviewTaskSubQuery]);
 
-            $ratesSum = $reviewsQuery->sum('rate');
-
             $reviewsCount = $reviewsQuery->count();
+
+            if (!$reviewsCount) {
+                continue;
+            }
 
             $failedTasksCount = Task::find()->where(
                 [
@@ -42,6 +44,12 @@ class ReviewFixture extends ActiveFixture
                     'contractor_id' => $contractorId
                 ]
             )->count();
+
+            if (!$failedTasksCount) {
+                continue;
+            }
+
+            $ratesSum = $reviewsQuery->sum('rate');
 
             $rating = $ratesSum / ($reviewsCount + $failedTasksCount);
             $contractor->rating = $rating;
