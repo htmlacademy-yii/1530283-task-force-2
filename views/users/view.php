@@ -14,6 +14,7 @@ use app\models\User;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use TaskForce\helpers\UserHelper;
+use floor12\phone\PhoneFormatter;
 
 ?>
 
@@ -171,10 +172,10 @@ use TaskForce\helpers\UserHelper;
                     <?php
                     if ($user->phone_number): ?>
                         <li class="enumeration-item">
-                            <a href="tel:<?= $user->phone_number ?>"
-                               class="link link--block link--phone">
-                                <!--                            todo: добавить форматирования номера телефона-->
-                                <?= Html::encode($user->phone_number) ?></a>
+                            <?= PhoneFormatter::a(
+                                $user->phone_number,
+                                ['class' => 'link link--block link--phone']
+                            ) ?>
                         </li>
                     <?php
                     endif; ?>
