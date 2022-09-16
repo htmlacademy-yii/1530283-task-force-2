@@ -38,7 +38,7 @@ $this->title = 'Просмотр задачи';
            data-action="completion">Завершить
             задание</a>
         <div class="task-map">
-            <img class="map" src="../img/map.png" width="725" height="346"
+            <img class="map" src="/img/map.png" width="725" height="346"
                  alt="Новый арбат, 23, к. 1">
             <p class="map-address town">Москва</p>
             <p class="map-address">Новый арбат, 23, к. 1</p>
@@ -66,7 +66,7 @@ $this->title = 'Просмотр задачи';
                      height="156" alt="Фото заказчиков">
                 <div class="feedback-wrapper">
                     <a href="<?= Url::to(
-                        ['/users/view', 'id' => $contractor->id]
+                        ['/user/view', 'id' => $contractor->id]
                     ) ?>"
                        class="link link--block link--big">
                         <?= Html::encode($contractor->name) ?>

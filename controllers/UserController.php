@@ -10,7 +10,7 @@ use app\models\User;
 use TaskForce\constants\UserRole;
 use yii\web\NotFoundHttpException;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     /**
      * Показывает ....
