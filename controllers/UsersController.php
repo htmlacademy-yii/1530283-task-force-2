@@ -51,10 +51,7 @@ class UsersController extends Controller
                                     ]
                                 )->count();
 
-        $age = $user->birthdate ? date_diff(
-            date_create($user->birthdate),
-            date_create('now')
-        )->y : null;
+
 
         $betterContractors = User::find()
                                  ->where(['role' => UserRole::CONTRACTOR])
@@ -79,7 +76,6 @@ class UsersController extends Controller
             'view',
             [
                 'user' => $user,
-                'age' => $age,
                 'reviewedTasks' => $user->tasks,
                 'completedTasksCount' => $completedTasksCount,
                 'failedTasksCount' => $failedTasksCount,

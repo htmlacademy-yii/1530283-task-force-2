@@ -6,7 +6,6 @@
  * @var int $completedTasksCount
  * @var int $failedTasksCount
  * @var int $ratingPosition
- * @var int|null $age
  * @var bool $isBusy
  */
 
@@ -74,18 +73,12 @@ use floor12\phone\PhoneFormatter;
                 <p class="head-info">Био</p>
                 <p class="bio-info"><span class="country-info">Россия</span>,
                     <span class="town-info"><?= $user->city->name ?></span>,
-                    <?php
-                    if ($age): ?>
-                        <!--                    todo: добавить склонение лет-->
-                        <span class="age-info"><?= $age ?></span> лет
-                    <?php
-                    else: ?>
-                        <?= 'возраст не указан' ?>
-                    <?php
-                    endif; ?>
+                    <span class="age-info"><?=
+                        UserHelper::formatAge($user) ?></span>
                 </p>
             </div>
         </div>
+
         <h4 class="head-regular">Отзывы заказчиков</h4>
 
         <?php

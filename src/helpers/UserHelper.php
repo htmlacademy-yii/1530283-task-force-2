@@ -21,4 +21,19 @@ class UserHelper
             Yii::$app->language
         );
     }
+
+    static public function formatAge(User $user): string
+    {
+        if (!isset($user->birthdate)) {
+            return 'возраст не указан';
+        }
+
+        $years = date_diff(date_create($user->birthdate), date_create())->y;
+
+        return Yii::$app->i18n->messageFormatter->format(
+            '{years, plural, one{# год} few{# года} other{# лет}}',
+            ['years' => $years],
+            Yii::$app->language
+        );
+    }
 }
