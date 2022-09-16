@@ -5,6 +5,7 @@
  * @var Task $reviewedTasks
  * @var int $completedTasksCount
  * @var int $failedTasksCount
+ * @var int $ratingPosition
  * @var int|null $age
  */
 
@@ -148,8 +149,7 @@ use floor12\phone\PhoneFormatter;
                     <?= $failedTasksCount ?> провалено
                 </dd>
                 <dt>Место в рейтинге</dt>
-                <!--                            todo: добавить место в рейтинге-->
-                <dd>25 место</dd>
+                <dd><?= $ratingPosition ?> место</dd>
                 <dt>Дата регистрации</dt>
                 <dd><?= Yii::$app->formatter
                         ->asDate($user->created_at, 'dd MMMM, HH:mm') ?></dd>

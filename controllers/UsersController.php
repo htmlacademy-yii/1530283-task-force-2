@@ -56,11 +56,18 @@ class UsersController extends Controller
             date_create('now')
         )->y : null;
 
-//        print '<pre>';
-//        var_dump(count($user->tasks));
-//        print_r($user->tasks[0]->customer);
-//        print_r($user);
-//        print '</pre>';
+        $betterContractors = User::find()
+                                 ->where(['role' => UserRole::CONTRACTOR])
+                                 ->andWhere(
+                                     'rating > :rating',
+                                     [':rating' => $user->rating]
+                                 )
+                                 ->count();
+
+        $ratingPosition = $betterContractors + 1;
+
+//        todo: Статусом может быть либо «Открыт для новых заказов», если пользователь сейчас не занят на активном задании, либо «Занят»,
+// если пользователь сейчас выполняет заказ.
 
         return $this->render(
             'view',
@@ -69,7 +76,8 @@ class UsersController extends Controller
                 'age' => $age,
                 'reviewedTasks' => $user->tasks,
                 'completedTasksCount' => $completedTasksCount,
-                'failedTasksCount' => $failedTasksCount
+                'failedTasksCount' => $failedTasksCount,
+                'ratingPosition' => $ratingPosition,
             ]
         );
     }
