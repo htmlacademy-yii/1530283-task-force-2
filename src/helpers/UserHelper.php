@@ -36,4 +36,14 @@ class UserHelper
             Yii::$app->language
         );
     }
+
+    static public function isContactsShown(User $user): bool
+    {
+        return !$user->is_contacts_hidden
+               && (
+                   $user->phone_number
+                   || $user->email
+                   || $user->telegram
+               );
+    }
 }

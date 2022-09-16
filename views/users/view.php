@@ -148,13 +148,7 @@ use floor12\phone\PhoneFormatter;
             </dl>
         </div>
         <?php
-        if (!$user->is_contacts_hidden
-            && (
-                $user->phone_number
-                || $user->email
-                || $user->telegram
-            )
-        ): ?>
+        if (UserHelper::isContactsShown($user)): ?>
             <div class="right-card white">
                 <h4 class="head-card">Контакты</h4>
                 <ul class="enumeration-list">
