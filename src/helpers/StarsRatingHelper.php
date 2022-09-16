@@ -5,7 +5,7 @@ namespace TaskForce\helpers;
 class StarsRatingHelper
 {
 
-    static public function getStarsRating($rating = 0, $additionalClass = ''): string
+    static public function getStarsRating(float $rating = 0, $additionalClass = ''): string
     {
         $stars = self::getStars($rating);
 
@@ -13,7 +13,7 @@ class StarsRatingHelper
     }
 
 
-    static protected function getStars($rating = 0): string
+    static protected function getStars(float $rating = 0): string
     {
         $stars = '';
 
