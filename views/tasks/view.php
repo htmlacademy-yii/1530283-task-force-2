@@ -55,6 +55,8 @@ $this->title = 'Просмотр задачи';
 
         <?php
         foreach ($responses as $response): ?>
+            <?php
+            $contractor = $response->contractor ?>
             <div class="response-card">
                 <img class="customer-photo"
                      src="<?= UserHelper::ensureAvatarUrl(
@@ -64,21 +66,19 @@ $this->title = 'Просмотр задачи';
                      height="156" alt="Фото заказчиков">
                 <div class="feedback-wrapper">
                     <a href="<?= Url::to(
-                        ['/users/view', 'id' => $response->contractor->id]
+                        ['/users/view', 'id' => $contractor->id]
                     ) ?>"
                        class="link link--block link--big">
-                        <?= Html::encode($response->contractor->name) ?>
+                        <?= Html::encode($contractor->name) ?>
                     </a>
                     <div class="response-wrapper">
                         <?= StarsRatingHelper::getStarsRating(
-                            $response->contractor->rating,
+                            $contractor->rating,
                             'small'
                         ) ?>
                         <p class="reviews"><?=
                             UserHelper::formatReviewsCount(
-                                count(
-                                    $response->contractor->tasks
-                                )
+                                count($contractor->tasks)
                             )
                             ?></p>
                     </div>

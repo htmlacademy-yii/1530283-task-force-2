@@ -78,7 +78,7 @@ class TasksController extends Controller
     }
 
     /**
-     * Показывает ....
+     * Показывает страницы просмотра задачи
      *
      * @return string
      */
@@ -93,18 +93,14 @@ class TasksController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $contractorReviewedTasksQuery = function (ActiveQuery $query) {
-            return $query->joinWith(
-                'review',
-                true,
-                'RIGHT JOIN'
-            );
+        $contractorTasksSubQuery = function (ActiveQuery $query) {
+            return $query->where(['status' => TaskStatus::COMPLETED]);
         };
 
         $responseContractorQuery = function (
             ActiveQuery $query
-        ) use ($contractorReviewedTasksQuery) {
-            return $query->with(['tasks' => $contractorReviewedTasksQuery]);
+        ) use ($contractorTasksSubQuery) {
+            return $query->with(['tasks' => $contractorTasksSubQuery]);
         };
 
         $responses = Response::find()
@@ -114,12 +110,6 @@ class TasksController extends Controller
                              )
                              ->orderBy('created_at DESC')
                              ->all();
-
-
-//        print '<pre>';
-//        var_dump(count($responses));
-//        print_r($responses[0]->contractor->tasks);
-//        print '</pre>';
 
         return $this->render(
             'view',
