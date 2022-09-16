@@ -10,7 +10,7 @@ use app\models\Task;
 use app\models\Response;
 use yii\helpers\Html;
 use \yii\helpers\Url;
-use TaskForce\models\Task as TaskHelper;
+use TaskForce\helpers\TaskHelper;
 use TaskForce\helpers\UserHelper;
 
 Yii::$app->formatter->locale = 'ru-RU';

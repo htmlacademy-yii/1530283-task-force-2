@@ -2,13 +2,13 @@
 
 namespace TaskForce\actions\task;
 
-use TaskForce\models\Task;
+use TaskForce\models\TaskHelper;
 
 abstract class Action
 {
     public function getName(): string
     {
-        return Task::getActionMap()[$this->getInternalName()];
+        return TaskHelper::getActionMap()[$this->getInternalName()];
     }
 
     abstract public function getInternalName(): string;
