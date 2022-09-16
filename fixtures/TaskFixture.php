@@ -2,7 +2,7 @@
 
 namespace app\fixtures;
 
-use app\fixtures\test\ActiveFixture;
+use TaskForce\test\ActiveFixture;
 
 class TaskFixture extends ActiveFixture
 {

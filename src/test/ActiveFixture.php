@@ -1,6 +1,6 @@
 <?php
 
-namespace app\fixtures\test;
+namespace TaskForce\test;
 
 use yii\test\ActiveFixture as YiiActiveFixture;
 

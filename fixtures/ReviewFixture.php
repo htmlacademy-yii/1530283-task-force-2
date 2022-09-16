@@ -2,7 +2,7 @@
 
 namespace app\fixtures;
 
-use app\fixtures\test\ActiveFixture;
+use TaskForce\test\ActiveFixture;
 use app\models\Review;
 use app\models\Task;
 use app\models\User;
@@ -20,7 +20,7 @@ class ReviewFixture extends ActiveFixture
         $contractors =
             User::find()->where(['role' => UserRole::CONTRACTOR])->all();
 
-        foreach ($contractors as $index => $contractor) {
+        foreach ($contractors as $contractor) {
             $contractorId = $contractor->id;
 
             $reviewTaskSubQuery =
