@@ -13,8 +13,6 @@ use \yii\helpers\Url;
 use TaskForce\helpers\TaskHelper;
 use TaskForce\helpers\UserHelper;
 
-Yii::$app->formatter->locale = 'ru-RU';
-
 $this->title = 'Просмотр задачи';
 ?>
 
@@ -79,11 +77,13 @@ $this->title = 'Просмотр задачи';
                             <?php
                             endforeach; ?>
                         </div>
-                        <!-- todo: Добавить склонение количества отзывов-->
-                        <p class="reviews"><?= count(
-                                $response->contractor->tasks
-                            ) ?>
-                            отзыва</p>
+                        <p class="reviews"><?=
+                            UserHelper::formatReviewsCount(
+                                count(
+                                    $response->contractor->tasks
+                                )
+                            )
+                            ?></p>
                     </div>
                     <p class="response-message">
                         <?= Html::encode($response->comment) ?>
