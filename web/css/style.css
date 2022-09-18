@@ -694,7 +694,9 @@ template {
 .specialization-bio {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex; }
+  display: flex;
+  gap: 1rem;
+}
 
 .specialization {
   max-width: 427px; }

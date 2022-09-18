@@ -18,6 +18,7 @@ use TaskForce\helpers\StarsRatingHelper;
 use TaskForce\helpers\UserHelper;
 use floor12\phone\PhoneFormatter;
 
+$this->title = 'Профиль исполнителя';
 ?>
 
 <main class="main-content container">
@@ -52,22 +53,29 @@ use floor12\phone\PhoneFormatter;
         <div class="specialization-bio">
             <div class="specialization">
                 <p class="head-info">Специализации</p>
-                <ul class="special-list">
-                    <?php
-                    foreach ($user->categories as $category): ?>
-                        <li class="special-item">
-                            <a href="<?= Url::to(
-                                [
-                                    '/tasks/index',
-                                    'categories[]' => $category->id
-                                ]
-                            ) ?>" class="link link--regular">
-                                <?= $category->name ?>
-                            </a>
-                        </li>
-                    <?php
-                    endforeach; ?>
-                </ul>
+                <?php
+                if (count($user->categories)): ?>
+                    <ul class="special-list">
+                        <?php
+                        foreach ($user->categories as $category): ?>
+                            <li class="special-item">
+                                <a href="<?= Url::to(
+                                    [
+                                        '/tasks/index',
+                                        'categories[]' => $category->id
+                                    ]
+                                ) ?>" class="link link--regular">
+                                    <?= $category->name ?>
+                                </a>
+                            </li>
+                        <?php
+                        endforeach; ?>
+                    </ul>
+                <?php
+                else: ?>
+                    <p class="bio-info">Не указаны</p>
+                <?php
+                endif; ?>
             </div>
             <div class="bio">
                 <p class="head-info">Био</p>
@@ -140,11 +148,9 @@ use floor12\phone\PhoneFormatter;
                 <dt>Место в рейтинге</dt>
                 <dd><?= $ratingPosition ?> место</dd>
                 <dt>Дата регистрации</dt>
-                <dd><?= Yii::$app->formatter
-                        ->asDate($user->created_at, 'dd MMMM, HH:mm') ?></dd>
+                <dd><?= UserHelper::formatRegistrationDate($user) ?></dd>
                 <dt>Статус</dt>
-                <dd><?=
-                    $isBusy ? 'Занят' : 'Открыт для новых заказов' ?></dd>
+                <dd><?= UserHelper::getStatus($isBusy) ?></dd>
             </dl>
         </div>
         <?php
@@ -155,9 +161,9 @@ use floor12\phone\PhoneFormatter;
                     <?php
                     if ($user->phone_number): ?>
                         <li class="enumeration-item">
-                            <?= PhoneFormatter::a(
-                                $user->phone_number,
-                                ['class' => 'link link--block link--phone']
+                            <?= UserHelper::getPhoneNumberLink(
+                                $user,
+                                'link link--block link--phone'
                             ) ?>
                         </li>
                     <?php
@@ -166,10 +172,10 @@ use floor12\phone\PhoneFormatter;
                     <?php
                     if ($user->email): ?>
                         <li class="enumeration-item">
-                            <a href="mailto:<?= $user->email ?>"
-                               class="link link--block link--email">
-                                <?= Html::encode($user->email) ?>
-                            </a>
+                            <?= UserHelper::getMailLink(
+                                $user,
+                                'link link--block link--email'
+                            ) ?>
                         </li>
                     <?php
                     endif; ?>
@@ -177,12 +183,10 @@ use floor12\phone\PhoneFormatter;
                     <?php
                     if ($user->telegram): ?>
                         <li class="enumeration-item">
-                            <a href="tg://resolve?domain=<?=
-                            Html::encode($user->telegram)
-                            ?>"
-                               class="link link--block link--tg">
-                                <?= Html::encode($user->telegram) ?>
-                            </a>
+                            <?= UserHelper::getTelegramLink(
+                                $user,
+                                'link link--block link--tg'
+                            ) ?>
                         </li>
                     <?php
                     endif; ?>
