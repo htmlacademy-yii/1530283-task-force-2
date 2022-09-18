@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use TaskForce\constants\ResponseStatus;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -104,7 +105,12 @@ class TasksController extends Controller
         };
 
         $responses = Response::find()
-                             ->where(['task_id' => $task->id])
+                             ->where(
+                                 [
+                                     'task_id' => $id,
+                                     'status' => ResponseStatus::PENDING,
+                                 ]
+                             )
                              ->with(
                                  ['contractor' => $responseContractorQuery]
                              )
@@ -113,10 +119,7 @@ class TasksController extends Controller
 
         return $this->render(
             'view',
-            [
-                'task' => $task,
-                'responses' => $responses,
-            ]
+            ['task' => $task, 'responses' => $responses]
         );
     }
 }
