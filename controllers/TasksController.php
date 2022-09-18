@@ -87,7 +87,7 @@ class TasksController extends Controller
     {
         $task = Task::find()
                     ->where(['id' => $id])
-                    ->with('category')
+                    ->with('category', 'taskFiles')
                     ->one();
 
         if (!$task) {

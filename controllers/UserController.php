@@ -13,7 +13,7 @@ use yii\web\NotFoundHttpException;
 class UserController extends Controller
 {
     /**
-     * Показывает ....
+     * Показывает страницу профиля исполнителя
      *
      * @return string
      */
