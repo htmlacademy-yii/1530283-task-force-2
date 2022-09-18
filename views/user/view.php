@@ -14,9 +14,9 @@ use app\models\Task;
 use app\models\User;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use TaskForce\helpers\StarsRatingHelper;
+use TaskForce\helpers\DateHelper;
 use TaskForce\helpers\UserHelper;
-use floor12\phone\PhoneFormatter;
+use TaskForce\helpers\StarsRatingHelper;
 
 $this->title = 'Профиль исполнителя';
 ?>
@@ -127,9 +127,9 @@ $this->title = 'Профиль исполнителя';
                     ) ?>
                     <p class="info-text">
                         <span class="current-time">
-                            <?= Yii::$app
-                                ->formatter
-                                ->asRelativeTime($reviewedTask->created_at) ?>
+                            <?= DateHelper::formatRelativeDate(
+                                $reviewedTask->created_at
+                            ) ?>
                         </span>
                     </p>
                 </div>
@@ -148,7 +148,7 @@ $this->title = 'Профиль исполнителя';
                 <dt>Место в рейтинге</dt>
                 <dd><?= $ratingPosition ?> место</dd>
                 <dt>Дата регистрации</dt>
-                <dd><?= UserHelper::formatRegistrationDate($user) ?></dd>
+                <dd><?= DateHelper::formatFullDate($user->created_at) ?></dd>
                 <dt>Статус</dt>
                 <dd><?= UserHelper::getStatus($isBusy) ?></dd>
             </dl>

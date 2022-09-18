@@ -39,13 +39,6 @@ class UserHelper
         );
     }
 
-    static public function formatRegistrationDate(User $user): string
-    {
-        return Yii::$app->formatter
-            ->asDate($user->created_at, 'd MMMM, HH:mm');
-    }
-
-
     static public function getStatus($isBusy = false): string
     {
         return $isBusy ? 'Занят' : 'Открыт для новых заказов';

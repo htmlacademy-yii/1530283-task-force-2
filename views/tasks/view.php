@@ -13,6 +13,7 @@ use \yii\helpers\Url;
 use TaskForce\helpers\TaskHelper;
 use TaskForce\helpers\UserHelper;
 use TaskForce\helpers\StarsRatingHelper;
+use TaskForce\helpers\DateHelper;
 
 $this->title = 'Просмотр задачи';
 ?>
@@ -89,8 +90,9 @@ $this->title = 'Просмотр задачи';
                 <div class="feedback-wrapper feedback-wrapper--last">
                     <p class="info-text">
                         <span class="current-time">
-                            <?= Yii::$app->formatter
-                                ->asRelativeTime($response->created_at) ?>
+                            <?= DateHelper::formatRelativeDate(
+                                $response->created_at
+                            ) ?>
                         </span>
                     </p>
                     <?php
@@ -119,12 +121,11 @@ $this->title = 'Просмотр задачи';
                 <dt>Категория</dt>
                 <dd><?= $task->category->name ?></dd>
                 <dt>Дата публикации</dt>
-                <dd><?= Yii::$app->formatter
-                        ->asRelativeTime($task->created_at) ?>
+                <dd><?= DateHelper::formatRelativeDate($task->created_at) ?>
                 </dd>
                 <dt>Срок выполнения</dt>
-                <dd><?= Yii::$app->formatter
-                        ->asDate($task->created_at, 'dd MMMM, HH:mm') ?></dd>
+                <dd><?= isset($task->term) ?
+                        DateHelper::formatFullDate($task->term) : 'Нет' ?></dd>
                 <dt>Статус</dt>
                 <dd><?= TaskHelper::getStatusMap()[$task->status] ?></dd>
             </dl>

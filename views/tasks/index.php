@@ -12,6 +12,7 @@ use app\models\TaskFilterForm;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use \yii\helpers\Url;
+use TaskForce\helpers\DateHelper;
 
 $this->title = 'Новое';
 ?>
@@ -42,10 +43,7 @@ $this->title = 'Новое';
                     </div>
                     <p class="info-text">
                 <span class="current-time">
-                    <?= Yii::$app
-                        ->formatter
-                        ->asRelativeTime($task->created_at)
-                    ?>
+                    <?= DateHelper::formatRelativeDate($task->created_at) ?>
                 </span>
                     </p>
                     <p class="task-text">
