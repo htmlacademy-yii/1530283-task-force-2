@@ -139,11 +139,15 @@ $this->title = 'Просмотр задачи';
                     <?php
                     foreach ($task->taskFiles as $taskFile): ?>
                         <li class="enumeration-item">
-                            <a href="<?= TaskFileHelper::getUrl($taskFile) ?>"
+                            <a href="<?= TaskFileHelper::formatUrl(
+                                $taskFile
+                            ) ?>"
                                class="link link--block link--clip">
                                 <?= Html::encode($taskFile->name) ?>
                             </a>
-                            <p class="file-size">356 Кб</p>
+                            <p class="file-size">
+                                <?= TaskFileHelper::formatSize($taskFile) ?>
+                            </p>
                         </li>
                     <?php
                     endforeach; ?>
