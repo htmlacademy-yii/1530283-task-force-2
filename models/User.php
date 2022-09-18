@@ -45,8 +45,9 @@ class User extends ActiveRecord
         return [
             [['name', 'email', 'password_hash', 'city_id'], 'required'],
             [['city_id', 'is_contacts_hidden'], 'integer'],
+            [['rating'], 'number'],
             [['role'], 'string'],
-            [['created_at', 'birthdate', 'rating'], 'safe'],
+            [['created_at', 'birthdate'], 'safe'],
             [['name', 'email', 'avatar_url'], 'string', 'max' => 255],
             [['password_hash'], 'string', 'max' => 60],
             [['phone_number'], 'string', 'max' => 11],
