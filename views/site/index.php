@@ -4,6 +4,6 @@
 
 $this->title = 'Taskforce';
 ?>
-<div>
+<main class="main-content container">
     <h1>Hello World!</h1>
-</div>
+</main>

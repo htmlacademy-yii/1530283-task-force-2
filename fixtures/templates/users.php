@@ -10,6 +10,8 @@ use TaskForce\constants\UserRole;
 $cities = City::find()->select('id')->all();
 $cityIds = array_column($cities, 'id');
 
+$avatarIndex = $faker->numberBetween(1, 5);
+
 return [
     'name' => $faker->name,
     'email' => $faker->email,
@@ -30,6 +32,6 @@ return [
     'telegram' => $faker->boolean ? $faker->word : null,
     'description' => $faker->boolean ? $faker
         ->paragraph(3, true) : null,
-    'avatar_url' => $faker->boolean ? $faker
-        ->imageUrl(150, 150) : null,
+    'avatar_url' => $faker->boolean ? "/img/avatars/$avatarIndex.png" : null,
+    'rating' => 0,
 ];

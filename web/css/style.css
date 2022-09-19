@@ -694,7 +694,9 @@ template {
 .specialization-bio {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex; }
+  display: flex;
+  gap: 1rem;
+}
 
 .specialization {
   max-width: 427px; }
@@ -805,6 +807,10 @@ template {
     -ms-flex-item-align: end;
         align-self: flex-end; }
 
+.feedback-wrapper--last {
+  margin-left: auto;
+}
+
 .feedback {
   margin-top: 0;
   font-style: italic;
@@ -824,6 +830,10 @@ template {
   margin: 0;
   -ms-flex-item-align: end;
       align-self: flex-end; }
+
+.feedback-wrapper .info-text {
+  text-align: right;
+}
 
 .response-wrapper {
   display: -webkit-box;

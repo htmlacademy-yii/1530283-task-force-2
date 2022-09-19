@@ -2,12 +2,15 @@
 
 namespace app\controllers;
 
+use TaskForce\constants\ResponseStatus;
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use app\models\Task;
 use app\models\Category;
 use app\models\Response;
 use app\models\TaskFilterForm;
+use yii\db\ActiveQuery;
 use TaskForce\constants\TaskStatus;
 
 class TasksController extends Controller
@@ -27,14 +30,14 @@ class TasksController extends Controller
 
         $tasksQuery = Task::find()
                           ->with('category', 'city')
-                          ->where(['status' => TaskStatus::NEW])
-                          ->andWhere(
-                              ['category_id' => $taskFilterFormModel->categories]
-                          )
-                          ->andWhere(
-                              "`created_at` >= CURRENT_TIMESTAMP() - INTERVAL :period HOUR",
-                              [':period' => $taskFilterFormModel->hoursPeriod]
-                          );
+                          ->where(['status' => TaskStatus::NEW]);
+
+
+        if ($taskFilterFormModel->categories) {
+            $tasksQuery->andWhere(
+                ['category_id' => $taskFilterFormModel->categories]
+            );
+        }
 
         if ($taskFilterFormModel->isRemoteOnly) {
             $tasksQuery->andWhere(['city_id' => null]);
@@ -47,6 +50,13 @@ class TasksController extends Controller
             $respondedTaskIds =
                 array_unique(array_column($responses, 'task_id'));
             $tasksQuery->andWhere(['not', ['id' => $respondedTaskIds]]);
+        }
+
+        if ($taskFilterFormModel->hoursPeriod) {
+            $tasksQuery->andWhere(
+                "`created_at` >= CURRENT_TIMESTAMP() - INTERVAL :period HOUR",
+                [':period' => $taskFilterFormModel->hoursPeriod]
+            );
         }
 
         $categories = Category::find()
@@ -65,6 +75,51 @@ class TasksController extends Controller
                 'categories' => $categories,
                 'filterFormModel' => $taskFilterFormModel
             ]
+        );
+    }
+
+    /**
+     * Показывает страницы просмотра задачи
+     *
+     * @return string
+     */
+    public function actionView(int $id)
+    {
+        $task = Task::find()
+                    ->where(['id' => $id])
+                    ->with('category', 'taskFiles')
+                    ->one();
+
+        if (!$task) {
+            throw new NotFoundHttpException();
+        }
+
+        $contractorTasksSubQuery = function (ActiveQuery $query) {
+            return $query->where(['status' => TaskStatus::COMPLETED]);
+        };
+
+        $responseContractorQuery = function (
+            ActiveQuery $query
+        ) use ($contractorTasksSubQuery) {
+            return $query->with(['tasks' => $contractorTasksSubQuery]);
+        };
+
+        $responses = Response::find()
+                             ->where(
+                                 [
+                                     'task_id' => $id,
+                                     'status' => ResponseStatus::PENDING,
+                                 ]
+                             )
+                             ->with(
+                                 ['contractor' => $responseContractorQuery]
+                             )
+                             ->orderBy('created_at DESC')
+                             ->all();
+
+        return $this->render(
+            'view',
+            ['task' => $task, 'responses' => $responses]
         );
     }
 }

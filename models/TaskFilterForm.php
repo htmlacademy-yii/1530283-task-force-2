@@ -17,7 +17,7 @@ class TaskFilterForm extends Model
     public string|array $categories = '';
     public bool $isRemoteOnly = false;
     public bool $withoutResponsesOnly = false;
-    public int $hoursPeriod = 1;
+    public string|int $hoursPeriod = '';
 
     /**
      * {@inheritdoc}

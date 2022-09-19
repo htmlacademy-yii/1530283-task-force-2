@@ -19,6 +19,7 @@ $config = [
             'templatePath' => '@app/fixtures/templates',
             'fixtureDataPath' => '@app/fixtures/data',
             'namespace' => 'app\fixtures',
+            'language' => 'ru_RU',
         ],
     ],
     'components' => [
@@ -36,13 +37,6 @@ $config = [
         'db' => $db,
     ],
     'params' => $params,
-    /*
-    'controllerMap' => [
-        'fixture' => [ // Fixture generation command line.
-            'class' => 'yii\faker\FixtureController',
-        ],
-    ],
-    */
 ];
 
 if (YII_ENV_DEV) {

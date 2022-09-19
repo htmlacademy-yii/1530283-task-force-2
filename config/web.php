@@ -6,6 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'language' => 'ru-RU',
+    'sourceLanguage' => 'en-US',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -43,11 +44,16 @@ $config = [
             ],
         ],
         'db' => $db,
+        'formatter' => [
+            'locale' => 'ru-RU',
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
                 'tasks' => 'tasks/index',
+                'tasks/view/<id:\d+>' => 'tasks/view',
+                'user/view/<id:\d+>' => 'user/view',
             ],
         ],
     ],

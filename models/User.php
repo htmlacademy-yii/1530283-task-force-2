@@ -20,6 +20,7 @@ use yii\db\ActiveRecord;
  * @property string|null $telegram
  * @property string|null $description
  * @property string|null $avatar_url
+ * @property float $rating
  *
  * @property Category[] $categories
  * @property City $city
@@ -44,6 +45,7 @@ class User extends ActiveRecord
         return [
             [['name', 'email', 'password_hash', 'city_id'], 'required'],
             [['city_id', 'is_contacts_hidden'], 'integer'],
+            [['rating'], 'number'],
             [['role'], 'string'],
             [['created_at', 'birthdate'], 'safe'],
             [['name', 'email', 'avatar_url'], 'string', 'max' => 255],

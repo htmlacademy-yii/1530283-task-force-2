@@ -2,11 +2,9 @@
 
 namespace app\fixtures;
 
-use yii\test\ActiveFixture;
-
-use app\models\Task;
+use TaskForce\test\ActiveFixture;
 
 class TaskFixture extends ActiveFixture
 {
-    public $modelClass = Task::class;
+    public $tableName = 'tasks';
 }

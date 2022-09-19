@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  * @property int $task_id
  * @property string $name
  * @property string $url
+ * @property int $size
  * @property string|null $created_at
  *
  * @property Task $task
@@ -31,8 +32,8 @@ class TaskFile extends ActiveRecord
     public function rules()
     {
         return [
-            [['task_id', 'name', 'url'], 'required'],
-            [['task_id'], 'integer'],
+            [['task_id', 'name', 'url', 'size'], 'required'],
+            [['task_id', 'size'], 'integer'],
             [['created_at'], 'safe'],
             [['name', 'url'], 'string', 'max' => 255],
             [

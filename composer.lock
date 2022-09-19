@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d801be479b7e1a52e73b76f71177573a",
+    "content-hash": "f20babc6c3dcebd5b74332cc709ede61",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -354,6 +354,57 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/v4.14.0"
             },
             "time": "2021-12-25T01:21:49+00:00"
+        },
+        {
+            "name": "floor12/yii2-phone",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/floor12/yii2-phone.git",
+                "reference": "a30983a5816f4b9d3a2d4cb0c429c7df196d48c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/floor12/yii2-phone/zipball/a30983a5816f4b9d3a2d4cb0c429c7df196d48c4",
+                "reference": "a30983a5816f4b9d3a2d4cb0c429c7df196d48c4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0",
+                "yiisoft/yii2": "~2.0.13"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "yii2-component",
+            "autoload": {
+                "psr-4": {
+                    "floor12\\phone\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "floor12",
+                    "email": "floor12@floor12.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Yii2 phone formatter and validator.",
+            "keywords": [
+                "floor12",
+                "formatter",
+                "phone",
+                "validator"
+            ],
+            "support": {
+                "issues": "https://github.com/floor12/yii2-phone/issues",
+                "source": "https://github.com/floor12/yii2-phone/tree/2.1.2"
+            },
+            "time": "2022-07-18T20:16:56+00:00"
         },
         {
             "name": "paragonie/random_compat",

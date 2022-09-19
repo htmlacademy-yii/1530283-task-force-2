@@ -1,6 +1,6 @@
 <?php
 
-namespace TaskForce\models;
+namespace TaskForce\helpers;
 
 use TaskForce\constants\TaskAction;
 use TaskForce\constants\TaskStatus;
@@ -11,7 +11,7 @@ use TaskForce\actions\task\FailAction as TaskFailAction;
 use TaskForce\exceptions\task\ActionException as TaskActionException;
 use TaskForce\exceptions\task\StatusException as TaskStatusException;
 
-class Task
+class TaskHelper
 {
     public int $customer_id;
     public ?int $contractor_id;
