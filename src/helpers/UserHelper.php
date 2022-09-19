@@ -15,7 +15,7 @@ class UserHelper
         return $user->avatar_url ?? Placeholder::USER_AVATAR;
     }
 
-    static public function formatReviewsCount(int $count): string|false
+    static public function formatReviewsCount(int $count): string
     {
         return Yii::$app->i18n->messageFormatter->format(
             '{count, plural, =0{# отзывов} one{# отзыв} few{# отзыва} other{# отзывов}}',
@@ -39,7 +39,7 @@ class UserHelper
         );
     }
 
-    static public function getStatus($isBusy = false): string
+    static public function getStatus(bool $isBusy): string
     {
         return $isBusy ? 'Занят' : 'Открыт для новых заказов';
     }
@@ -55,7 +55,7 @@ class UserHelper
 
     static public function getPhoneNumberLink(
         User $user,
-        $classNames = ''
+        string $classNames = ''
     ): string {
         return PhoneFormatter::a(
             $user->phone_number,
@@ -63,14 +63,14 @@ class UserHelper
         );
     }
 
-    static public function getMailLink(User $user, $classNames = ''): string
+    static public function getMailLink(User $user, string $classNames = ''): string
     {
         $email = Html::encode($user->email);
 
         return "<a href=\"mailto:$email\" class=\"$classNames\">$email</a>";
     }
 
-    static public function getTelegramLink(User $user, $classNames = ''): string
+    static public function getTelegramLink(User $user, string $classNames = ''): string
     {
         $telegram = Html::encode($user->telegram);
 
